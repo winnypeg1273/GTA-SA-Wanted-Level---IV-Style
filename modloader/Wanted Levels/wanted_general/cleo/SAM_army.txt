@@ -1,0 +1,88 @@
+{$CLEO .cs}
+0000:
+:NONAME_2
+wait 0 
+if 
+   Player.Defined($PLAYER_CHAR)
+else_jump @NONAME_2 
+if and
+   Player.WantedLevel($PLAYER_CHAR) > 5
+  $ONMISSION == 0 
+  $ACTIVE_INTERIOR == 0 
+   not Actor.Dead($PLAYER_ACTOR)
+else_jump @NONAME_2 
+if or
+   04A9:   actor $PLAYER_ACTOR driving_heli
+   04AB:   actor $PLAYER_ACTOR driving_plane
+   0A0C:   player $PLAYER_CHAR on_jetpack
+else_jump @NONAME_2
+jump @NONAME_105
+
+:NONAME_105
+wait 0
+Actor.StorePos($PLAYER_ACTOR, 1@, 2@, 3@)
+02C0: store_to 4@ 5@ 6@ ped_path_coords_closest_to 1@ 2@ 3@
+050A: 17@ = distance_between_XYZ 1@ 2@ 3@ and_XYZ 4@ 5@ 6@
+if
+   17@ < 150.0
+jf @NONAME_2
+Model.Load(#ARMY)
+Model.Load(#ROCKETLA)
+Model.Load(#M4)
+
+:NONAME_217
+wait 0
+if and
+   Model.Available(#ARMY)
+   Model.Available(#ROCKETLA)
+   Model.Available(#M4)
+jf @NONAME_217
+Actor.Create(11@, Cop, #ARMY, 4@, 5@, 6@)
+Actor.GiveWeaponAndAmmo(11@, 35, 1000)
+Actor.Health(11@) = 250
+07DD: set_actor 11@ attack_rate 40
+Actor.WeaponAccuracy(11@) = 60
+05E2: AS_actor 11@ kill_actor $PLAYER_ACTOR 
+
+:NONAME_258
+wait 500
+if and
+    Player.WantedLevel($PLAYER_CHAR) > 2
+    not Actor.Dead(11@)
+    00F2:   actor 11@ near_actor $PLAYER_ACTOR radius 200.0 200.0 150.0 
+jf @NONAME_552
+if or
+    044B:   actor $PLAYER_ACTOR on_foot
+    04AD:   actor $PLAYER_ACTOR in_water
+jf @NONAME_258
+jump @NONAME_385
+
+:NONAME_385
+0555: remove_weapon 35 from_actor 11@
+Actor.GiveWeaponAndAmmo(11@, 31, 9999)
+Actor.WeaponAccuracy(11@) = 75
+05E2: AS_actor 11@ kill_actor $PLAYER_ACTOR 
+
+:NONAME_414
+wait 500
+if and
+   Player.WantedLevel($PLAYER_CHAR) > 2
+   not Actor.Dead($PLAYER_ACTOR)
+   0741:  not actor $PLAYER_ACTOR busted 
+jf @NONAME_552
+if and
+   00F2:   actor 11@ near_actor $PLAYER_ACTOR radius 100.0 100.0 50.0
+   not  Actor.Dead(11@) 
+jf @NONAME_552
+jump @NONAME_414
+
+:NONAME_552
+wait 0
+0687: clear_actor 11@ task
+Actor.RemoveReferences(11@)
+Model.Destroy(#ARMY)
+Model.Destroy(#ROCKETLA)
+Model.Destroy(#M4)
+0209: 30@ = random_int_in_ranges 10000 20000 
+wait 30@ 
+jump @NONAME_2

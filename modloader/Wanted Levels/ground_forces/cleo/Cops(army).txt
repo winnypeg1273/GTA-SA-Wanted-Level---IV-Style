@@ -1,0 +1,205 @@
+{$CLEO .cs}
+0000:
+:Noname_01
+wait 500
+if and
+ Player.Defined($PLAYER_CHAR)
+ Player.WantedLevel($PLAYER_CHAR) > 1
+jf @Noname_01
+
+:Noname_2
+if
+    00A3:   actor $PLAYER_ACTOR sphere 0 in_rectangle_cornerA -89.8039 2130.7937 cornerB 443.1514 1687.9784 //Area69
+jf @Noname_01
+
+:Noname_9
+wait 0
+if and
+    056E:   car 20@(30@,2i) defined
+    056D:   actor 10@(30@,2i) defined
+    056D:   actor 12@(30@,2i) defined
+jf @Noname_15
+wait 0  
+if and
+   Player.WantedLevel($PLAYER_CHAR) > 1
+   Player.Defined($PLAYER_CHAR)
+jf @Noname_122         
+if or
+    Actor.Driving(10@(30@,2i))
+    Actor.Driving(12@(30@,2i))
+jf @Noname_42
+if
+    00A3:   actor $PLAYER_ACTOR sphere 0 in_rectangle_cornerA -89.8039 2130.7937 cornerB 443.1514 1687.9784 //Area69
+jf @Noname_122
+if and
+   0205: actor $PLAYER_ACTOR near_car 20@(30@,2i) radius 500.0 500.0 500.0 flag 0
+   not Car.Wrecked(20@(30@,2i))  
+jf @Noname_122
+if
+   not Actor.Dead(10@(30@,2i))
+jf @Noname_52
+if and
+    0205: actor $PLAYER_ACTOR near_car 20@(30@,2i) radius 5.0 5.0 10.0 flag 0
+    03CE: car 20@(30@,2i) stuck
+jf @Noname_29
+jump @Noname_32
+
+:Noname_29    
+if
+    0206:   actor $PLAYER_ACTOR near_car 20@(30@,2i) radius 15.0 15.0 10.0 flag 0 on_foot
+jf @Noname_226
+jump @Noname_30
+
+:Noname_30
+06AC: 23@ = actor $PLAYER_ACTOR movement_speed       
+if
+    23@ < 5.0
+jf @Noname_226
+Car.SetMaxSpeed(20@(30@,2i),15)
+
+:Noname_32
+wait 0
+0633: AS_actor 10@(30@,2i) exit_car 
+0633: AS_actor 12@(30@,2i) exit_car
+//060A: create_decision_maker_type 0 store_to 27@ // decision\allowed\m_.ped files
+//060B: set_actor 10@(30@,2i) decision_maker_to 27@
+//060B: set_actor 12@(30@,2i) decision_maker_to 27@     
+06E4: AS_actor 10@(30@,2i) attempt_to_bust_actor $PLAYER_ACTOR
+06E4: AS_actor 12@(30@,2i) attempt_to_bust_actor $PLAYER_ACTOR                  
+
+:Noname_42
+wait 100   
+if or
+00F2:   actor 10@(30@,2i) near_actor $PLAYER_ACTOR radius 150.0 150.0 0 
+00F2:   actor 12@(30@,2i) near_actor $PLAYER_ACTOR radius 150.0 150.0 0
+jf @Noname_122
+if or
+    not Actor.Dead(10@(30@,2i))
+    not Actor.Dead(12@(30@,2i))
+jf @Noname_122
+if     
+    09DE: actor $PLAYER_ACTOR entering_car                                
+    //not Actor.Driving($PLAYER_ACTOR)
+jf @Noname_226
+jump @Noname_122
+
+:Noname_52
+wait 0
+Car.SetMaxSpeed(20@(30@,2i),0)
+if
+    not Actor.Dead(12@(30@,2i))
+jf @Noname_122
+0633: AS_actor 12@(30@,2i) exit_car
+jump @Noname_122
+
+:Noname_122
+wait 0 
+03E5: show_text_box 'HELP101' 
+Actor.RemoveReferences(10@(30@,2i))
+Actor.RemoveReferences(12@(30@,2i))
+Car.RemoveReferences(20@(30@,2i))
+03CD: disable_car 20@(30@,2i) stuck_check
+//065C: release_decision_maker 27@
+10@(30@,2i) = 0
+12@(30@,2i) = 0
+20@(30@,2i) = 0
+jump @Noname_226
+
+:Noname_226
+30@ += 1
+if
+    //001D:  30@ > 31@  // (int)
+    30@ > 1
+jf @Noname_9
+30@ = 0
+jump @Noname_2
+
+:Noname_15
+wait 1
+if and
+    Player.WantedLevel($PLAYER_CHAR) > 3
+    Player.Defined($PLAYER_CHAR)
+jf @Noname_378
+Actor.StorePos($PLAYER_ACTOR, 7@, 8@, 9@)
+092E: get_water_height_at 7@ 8@ ignore_waves 0 store_to 9@
+if 
+    9@ < 10.0
+jf @Noname_226
+
+:Noname_15A
+if
+  $ACTIVE_INTERIOR == 0
+jf @Noname_226
+1@ = #BARRACKS
+3@ = 31
+if
+    Player.WantedLevel($PLAYER_CHAR) > 3
+jf @Noname_15B  
+jump @Noname_17
+
+:Noname_15B
+if
+    Player.WantedLevel($PLAYER_CHAR) > 2
+jf @Noname_15C
+0209: 0@ = random_int_in_ranges 0 100
+if 0@ < 50
+jf @Noname_15C
+jump @Noname_17
+
+:Noname_15C
+1@ = #PATRIOT
+3@ = 22
+jump @Noname_17
+
+:Noname_17
+Model.Load(1@)
+0781: get_weapon_with_ID 3@ model_to 27@ 
+Model.Load(27@)
+038B: load_requested_models
+
+:Noname_18
+wait 1
+if and
+    Model.Available(1@)
+    Model.Available(3@)
+jf @Noname_18
+Actor.StorePos($PLAYER_ACTOR, 7@, 8@, 9@)
+0208: 6@ = random_float_in_ranges 0.0 360.0 
+02F7: 4@ = cosine 6@ // (float) 
+02F6: 5@ = sine 6@ // (float)
+28@ = -10.0
+006A: 28@ *= 30@  // (int)
+28@ += 100.0
+006B: 4@ *= 28@ // (float)
+006B: 5@ *= 28@ // (float)
+0063: 7@ -= 4@ // (float) 
+0063: 8@ -= 5@ // (float) 
+02CE: 9@ = ground_z_at 7@ 8@ 9@ 
+04D3: get_nearest_car_path_coords_from 7@ 8@ 9@ type 2 store_to 7@ 8@ 9@ 
+Car.Create(20@(30@,2i), 1@, 7@, 8@, 9@)
+Actor.CreateAsDriver(10@(30@,2i), PedType.Cop, #ARMY, 20@(30@,2i))
+Actor.CreateAsPassenger(12@(30@,2i), PedType.Cop, #ARMY, 20@(30@,2i), 0)
+Actor.Health(10@(30@,2i)) = 300
+Actor.Health(12@(30@,2i)) = 300 
+Actor.GiveWeaponAndAmmo(10@(30@,2i), 3@, 99999)
+Actor.GiveWeaponAndAmmo(12@(30@,2i), 3@, 99999)
+0397: enable_car 20@(30@,2i) siren 1
+0423: set_car 20@(30@,2i) improved_handling_to 2.0 // (float)  
+Car.SetMaxSpeed(20@(30@,2i), 60.0)
+03CC: enable_car 20@(30@,2i) stuck_check_distance_to 2.0 time_to 5000
+053F: set_car 20@(30@,2i) tires_vulnerability 0 
+00AE: set_car 20@(30@,2i) traffic_behaviour_to 2
+00AF: set_car 20@(30@,2i) driver_behaviour_to 2
+Model.Destroy(1@)  
+Model.Destroy(27@)
+jump @Noname_226  
+
+:Noname_378
+wait 1
+30@ = 0
+jump @Noname_550   
+
+:Noname_550
+wait 1
+jump @Noname_01 
+                          

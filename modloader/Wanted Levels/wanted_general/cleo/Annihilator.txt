@@ -1,0 +1,168 @@
+// This file was decompiled using SASCM.ini published on 2021-01-30
+{$CLEO .cs}
+
+0000: NOP
+
+:Noname_01
+wait 500
+if
+    Player.Defined($PLAYER_CHAR)
+jf @Noname_01
+0652: 9@ = integer_stat 82
+
+:Noname_2
+wait 500 
+if and
+   Player.WantedLevel($PLAYER_CHAR) > 4
+   $ACTIVE_INTERIOR == 0   
+jf @Noname_01
+if
+    9@ == 0
+jf @Noname_01
+29@ = 0
+096A: enable_flying_helis 0
+jump @Noname_17
+
+
+:Noname_17
+Model.Load(#RAINDANC)
+Model.Load(#SWAT)
+Model.Load(#MP5LNG)
+038B: load_requested_models 
+
+:Noname_49
+wait 0 
+if and
+   Model.Available(#RAINDANC)
+   Model.Available(#SWAT)
+   Model.Available(#MP5LNG)
+jf @Noname_49
+28@ = 0 
+
+:Noname_51
+if
+    056E: car 10@(28@,2i) defined
+jf @Noname_52
+jump @Noname_151
+
+:Noname_52
+if or
+  not Player.Defined($PLAYER_CHAR)   
+  not Player.WantedLevel($PLAYER_CHAR) > 4
+jf @Noname_53
+29@ += 1
+jump @Noname_244
+
+:Noname_53
+0209: 0@ = random_int_in_ranges 10000 20000 
+wait 0@ 
+0208: 26@ = random_float_in_ranges 0.0 360.0 
+02F7: 25@ = cosine 26@ // (float) 
+02F6: 24@ = sine 26@ // (float) 
+24@ *= 100.0 
+25@ *= 100.0 
+04C4: store_coords_to 1@ 2@ 3@ from_actor $PLAYER_ACTOR with_offset 24@ 25@ 60.0 
+Car.Create(10@(28@,2i), #RAINDANC, 1@, 2@, 3@)
+Car.Angle(10@(28@,2i)) = 26@
+02AA: set_car 10@(28@,2i) immune_to_nonplayer 1
+0229: set_car 10@(28@,2i) primary_color_to 0 secondary_color_to 6
+07BB: set_heli 10@(28@,2i) horizontal_thrust_power 1
+Actor.CreateAsDriver(4@(28@,2i), PedType.Cop, #SWAT, 10@(28@,2i))
+0825: set_helicopter 10@(28@,2i) instant_rotor_start     
+0727: set_heli 10@(28@,2i) behavior_to_police_heli_and_follow_actor $PLAYER_ACTOR follow_car -1 radius 30.0
+009A: 13@(28@,2i) = create_actor_pedtype 6 model #SWAT at 1@ 2@ 3@
+0464: put_actor 13@(28@,2i) into_turret_on_car 10@(28@,2i) at_car_offset -1.4 -0.8 -0.1 position 1 shooting_angle_limit 180.0 with_weapon 29 
+009A: 15@(28@,2i) = create_actor_pedtype 6 model #SWAT at 1@ 2@ 3@
+0464: put_actor 15@(28@,2i) into_turret_on_car 10@(28@,2i) at_car_offset 1.4 -0.8 -0.1 position 1 shooting_angle_limit 180.0 with_weapon 29 
+01C8: 17@(28@,2i) = create_actor_pedtype 6 model #SWAT in_heli 10@(28@,2i) passenger_seat 0 
+0085: 30@ = 28@ //int
+
+:Noname_56
+02A9: set_actor 13@(30@,4i) immune_to_nonplayer 1
+07DD: set_actor 13@(30@,4i) temper_to 70 
+077A: set_actor 13@(30@,4i) acquaintance 4 to_actors_pedtype 0 
+099F: AS_actor 13@(30@,4i) ignore_weapon_range 1
+05E2: AS_actor 13@(30@,4i) kill_actor $PLAYER_ACTOR 
+0638: AS_actor 13@(30@,4i) stay_put 1 
+04EB: AS_actor 13@(30@,4i) crouch 1
+02E2: set_actor 13@(30@,4i) weapon_accuracy_to 75
+if or                                    
+    30@ == 0
+    30@ == 1
+jf @Noname_245
+30@ += 2
+jump @Noname_56
+
+:Noname_151
+wait 0 
+if or
+  not Player.Defined($PLAYER_CHAR)   
+  not Player.WantedLevel($PLAYER_CHAR) > 4
+jf @Noname_152
+29@ += 1 
+jump @Noname_242
+
+:Noname_152
+Car.StorePos(10@(28@,2i), 7@, 8@, 9@)
+if
+00EC:   actor $PLAYER_ACTOR sphere 0 near_point 7@ 8@ radius 300.0 300.0 
+jf @Noname_242
+if and
+    Actor.Dead(13@(28@,2i))
+    Actor.Dead(15@(28@,2i))
+then jump @Noname_242 
+end
+if
+   not Car.Wrecked(10@(28@,2i))
+jf @Noname_237 
+if 
+   Actor.Dead(4@(28@,2i))
+jf @Noname_244
+0564: heli 10@(28@,2i) simulate_crash_landing 
+wait 2500 
+0@ = Car.Health(10@(28@,2i))
+if 
+  0@ > 100 
+jf @Noname_242 
+Car.Health(10@(28@,2i)) = 240
+jump @Noname_237
+
+:Noname_237
+0465: remove_actor 13@(28@,2i) from_turret_mode
+0465: remove_actor 15@(28@,2i) from_turret_mode
+jump @Noname_242 
+
+:Noname_242
+wait 0 
+Car.RemoveReferences(10@(28@,2i))
+Actor.RemoveReferences(4@(28@,2i))
+Actor.RemoveReferences(17@(28@,2i))
+Actor.RemoveReferences(13@(28@,2i))
+Actor.RemoveReferences(15@(28@,2i)) 
+10@(28@,2i) = 0
+4@(28@,2i) = 0
+17@(28@,2i) = 0
+13@(28@,2i) = 0
+15@(28@,2i) = 0 
+
+:Noname_244
+if
+    29@ < 2
+jf @Noname_259
+jump @Noname_245
+
+:Noname_245
+28@ += 1
+if 
+    28@ < 2
+jf @Noname_49
+jump @Noname_51
+
+:Noname_259
+Model.Destroy(#RAINDANC)
+Model.Destroy(#SWAT)
+Model.Destroy(#MP5LNG)
+28@ = 0
+29@ = 0
+096A: enable_flying_helis 1
+jump @Noname_2
