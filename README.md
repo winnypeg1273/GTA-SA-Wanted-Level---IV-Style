@@ -11,7 +11,10 @@ This mod will implement GTA IV's police response in GTA San Andreas
 
 ## How The New Wanted Level Works
 This mod alters police response in GTA SA to be more like GTA IV:
-* 1-3 stars are basically the same
+* 1-3 stars are basically the same with some minor changes
+  * Aiming at cops will guarantee 2 stars instead of 1, and 3 stars if the officer is killed
+  * Aiming at a civilian in sight of a cop guarantees 1 star, and 2 stars for shooting them in the sight of a cop
+  * You may get a wanted level from climbing on the top of a patrolling police car
   * At 3 stars an officer may spawn ahead and deploy his spike strip to stop your vehicle
 * 4 stars: either SWAT or the FBI will come after the player.
   * If SWAT is pursuing you and the wanted level is cleared in any way, including getting wasted/busted, the next time you get 4 stars or more, you will instead encounter the FBI. And vice versa.
