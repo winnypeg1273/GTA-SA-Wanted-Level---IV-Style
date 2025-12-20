@@ -19,6 +19,8 @@ UNTIL 010F:   player $PLAYER_CHAR wanted_level > 3
         0247: load_model #LVPD1
         0247: load_model #ENFORCER
         0247: load_model #FBIRANCH
+        0247: load_model #BARRACKS
+        0247: load_model #RHINO
         0247: load_model #SWAT
         0247: load_model #FBI 
         0247: load_model #ARMY
