@@ -65,18 +65,18 @@ jump @POLICESPIKES_1
 :POLICESPIKES_41
 if or
    not Model.Available(15@)  
-   not Model.Available(#COLT45)
+   not Model.Available(#SILENCED)
    not Model.Available(2892)   
 jf @POLICESPIKES_51 
 Model.Load(15@)
-Model.Load(#COLT45)
+Model.Load(#SILENCED)
 Model.Load(2892)
 wait 500
-jump @POLICESPIKES_41
+jump @POLICESPIKES_1
 
 :POLICESPIKES_51   //create actors
 Actor.Create(14@, 29, 15@, 4@, 5@, 6@)
-Actor.GiveWeaponAndAmmo(14@, 22, 1000)
+Actor.GiveWeaponAndAmmo(14@, 23, 1000)
 4@ = 0.0
 5@ = 0.0
 6@ = 0.0
@@ -154,6 +154,7 @@ JUMP @POLICESPIKES_52
 
 :POLICESPIKES_6001  
 Object.Destroy(10@)
+048F: actor 14@ remove_weapons
 ACTOR.RemoveReferences(14@)
 Model.Destroy(15@)
 Model.Destroy(2892)

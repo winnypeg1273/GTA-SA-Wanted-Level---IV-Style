@@ -85,7 +85,15 @@ Actor.CreateAsDriver(4@(28@,2i), PedType.Cop, #SWAT, 10@(28@,2i))
 05E2: AS_actor 13@(30@,4i) kill_actor $PLAYER_ACTOR 
 0638: AS_actor 13@(30@,4i) stay_put 1 
 04EB: AS_actor 13@(30@,4i) crouch 1
-02E2: set_actor 13@(30@,4i) weapon_accuracy_to 75
+
+if
+    Player.WantedLevel($PLAYER_CHAR) > 5
+then
+    02E2: set_actor 13@(30@,4i) weapon_accuracy_to 75
+else
+    02E2: set_actor 13@(30@,4i) weapon_accuracy_to 5
+end
+
 if or                                    
     30@ == 0
     30@ == 1

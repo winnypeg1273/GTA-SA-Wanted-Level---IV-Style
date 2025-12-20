@@ -3,15 +3,23 @@
 
 0000: NOP 
 
-:NONAME_2
-wait 0 
-   Player.WantedLevel($PLAYER_CHAR) > 5
-jf @NONAME_2 
-15@ = 0 
+:NONAME_2           
+wait 0        
+   Player.WantedLevel($PLAYER_CHAR) > 4
+jf @NONAME_2  
+0652: 0@ = integer_stat 82
+if and
+    0@ == 1
+    not Player.WantedLevel($PLAYER_CHAR) > 5
+jf @NONAME_3
+jump @NONAME_2
+
+:NONAME_3
+15@ = 0     
 Model.Load(#COLT45)
 Model.Load(#MP5LNG)
 Model.Load(#M4)
-038B: load_requested_models 
+038B: load_requested_models
 
 :NONAME_64
 wait 0 
@@ -22,23 +30,30 @@ jf @NONAME_518
 :NONAME_108
 if or
    not Player.Defined($PLAYER_CHAR)
-   not Player.WantedLevel($PLAYER_CHAR) > 5
+   not Player.WantedLevel($PLAYER_CHAR) > 4
 jf @NONAME_152 
 15@ = 1 
 jump @NONAME_458 
-jump @NONAME_422 
+/*jump @NONAME_422*/ 
 
 :NONAME_152
-if and
+if
    Actor.Model(1@) == #SWAT
-   Player.WantedLevel($PLAYER_CHAR) > 3
-jf @NONAME_250 
-0819: 2@ = actor 1@ distance_from_ground 
-if and
-   not 2@ > 7.5 
-   044B:  actor 1@ on_foot
-02D8:   actor 1@ current_weapon == 28 
+jf @NONAME_250
+0819: 2@ = actor 1@ distance_from_ground
+if
+    0611:   actor 1@ performing_animation "abseil"
+then
+    02AB: set_actor 1@ immunities BP 0 FP 0 EP 0 CP 1 MP 0
+end   
+if and 
+   2@ < 7.5           
+   Player.WantedLevel($PLAYER_CHAR) > 5
 jf @NONAME_243 
+if and
+   044B:  actor 1@ on_foot
+   02D8:   actor 1@ current_weapon == 28
+jf @NONAME_243
 048F: actor 1@ remove_weapons 
 Actor.GiveWeaponAndAmmo(1@, WeaponType.M4, 9999)
 Actor.RemoveReferences(1@)

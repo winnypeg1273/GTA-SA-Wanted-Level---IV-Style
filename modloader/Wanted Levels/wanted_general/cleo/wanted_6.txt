@@ -30,19 +30,18 @@ then
     0A8C: write_memory 25@ size 1 value 0 virtual_protect 0 
 end */     
 
-if or
+if
     11@ == 16
-    00A3:   actor $PLAYER_ACTOR sphere 0 in_rectangle_cornerA -89.8039 2130.7937 cornerB 443.1514 1687.9784 //Area69
 then
     0A8C: write_memory 25@ size 1 value 0 virtual_protect 0 
 end
 
-if and
+/*if and
     5@ > 3
     00DD:  actor $PLAYER_ACTOR driving_car_with_model #RHINO
 then
-    0A8C: write_memory 25@ size 1 value 0 virtual_protect 0
+    0A8C: write_memory 25@ size 1 value 1 virtual_protect 0
     0A8C: write_memory 27@ size 1 value 0 virtual_protect 0 
-end
+end */
   
 jump @Noname_16

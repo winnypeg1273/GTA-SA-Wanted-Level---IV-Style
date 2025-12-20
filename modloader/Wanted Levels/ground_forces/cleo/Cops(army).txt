@@ -1,205 +1,117 @@
+// This file was decompiled using SASCM.ini published on 2021-01-30
 {$CLEO .cs}
-0000:
-:Noname_01
-wait 500
-if and
- Player.Defined($PLAYER_CHAR)
- Player.WantedLevel($PLAYER_CHAR) > 1
-jf @Noname_01
 
-:Noname_2
+0000: NOP 
+wait 0 
+
+:Noname_6
+wait 1000 
+if and
+   Player.WantedLevel($PLAYER_CHAR) > 1 
+   00A3:   actor $PLAYER_ACTOR sphere 0 in_rectangle_cornerA -89.8039 2130.7937 cornerB 443.1514 1687.9784 //Area69
+  $ACTIVE_INTERIOR == 0 
+jf @Noname_6
+/*01C0: 29@ = player $PLAYER_CHAR wanted_level
+0652: 30@ = integer_stat 82
+if and
+    29@ == 4
+    30@ == 1
+jf @Noname_7
+jf @Noname_6        */
+
+
+:Noname_7
 if
-    00A3:   actor $PLAYER_ACTOR sphere 0 in_rectangle_cornerA -89.8039 2130.7937 cornerB 443.1514 1687.9784 //Area69
-jf @Noname_01
+    Player.WantedLevel($PLAYER_CHAR) > 3
+then
+    28@ = 31
+    29@ = #M4
+    30@ = #BARRACKS
+else
+    28@ = 22
+    29@ = #COLT45
+    30@ = #PATRIOT
+end
+   
 
-:Noname_9
-wait 0
+:Noname_29 
+Model.Load(30@)
+Model.Load(29@)
+Model.Load(#ARMY) 
+
+:Noname_58
+wait 300 
 if and
-    056E:   car 20@(30@,2i) defined
-    056D:   actor 10@(30@,2i) defined
-    056D:   actor 12@(30@,2i) defined
-jf @Noname_15
-wait 0  
+   Model.Available(30@)
+   Model.Available(29@)
+   Model.Available(#ARMY)
+jf @Noname_6 
+wait 0 
+0209: 5@ = random_int_in_ranges 50.0 100.0 
+0209: 6@ = random_int_in_ranges 50.0 100.0 
+04C4: store_coords_to 1@ 2@ 3@ from_actor $PLAYER_ACTOR with_offset 5@ 6@ 1.0 
+02C1: store_to 7@ 8@ 9@ car_path_coords_closest_to 1@ 2@ 3@ 
+Car.Create(0@, 30@, 7@, 8@, 9@)
+Actor.CreateAsDriver(10@, PedType.Cop, #ARMY, 0@)
+Actor.CreateAsPassenger(11@, PedType.Cop, #ARMY, 0@, 0)
+Actor.Health(10@) = 500
+Actor.Health(11@) = 500
+Actor.WeaponAccuracy(10@) = 90
+Actor.WeaponAccuracy(11@) = 90
+Actor.GiveWeaponAndAmmo(10@, 28@, 99999)
+Actor.GiveWeaponAndAmmo(11@, 28@, 99999)
+0423: set_car 0@ improved_handling_to 2.0 // (float) 
+Car.SetMaxSpeed(0@, 60.0)
+Car.SetDriverBehaviour(0@, CarMission.BlockPlayerFaraway)     
+00AE: set_car 0@ traffic_behaviour_to 2 
+
+:Noname_105
+wait 500       
 if and
    Player.WantedLevel($PLAYER_CHAR) > 1
-   Player.Defined($PLAYER_CHAR)
-jf @Noname_122         
-if or
-    Actor.Driving(10@(30@,2i))
-    Actor.Driving(12@(30@,2i))
-jf @Noname_42
+   not Car.Wrecked(0@)
+   0205:   actor $PLAYER_ACTOR near_car 0@ radius 500.0 500.0 500.0 flag 0
+   00A3:   actor $PLAYER_ACTOR sphere 0 in_rectangle_cornerA -89.8039 2130.7937 cornerB 443.1514 1687.9784 //Area69
+jf @Noname_1154 
 if
-    00A3:   actor $PLAYER_ACTOR sphere 0 in_rectangle_cornerA -89.8039 2130.7937 cornerB 443.1514 1687.9784 //Area69
-jf @Noname_122
-if and
-   0205: actor $PLAYER_ACTOR near_car 20@(30@,2i) radius 500.0 500.0 500.0 flag 0
-   not Car.Wrecked(20@(30@,2i))  
-jf @Noname_122
-if
-   not Actor.Dead(10@(30@,2i))
-jf @Noname_52
-if and
-    0205: actor $PLAYER_ACTOR near_car 20@(30@,2i) radius 5.0 5.0 10.0 flag 0
-    03CE: car 20@(30@,2i) stuck
-jf @Noname_29
-jump @Noname_32
+  0206:   actor $PLAYER_ACTOR near_car 0@ radius 15.0 15.0 10.0 flag 0 on_foot
+jf @Noname_105  
+jump @Noname_676
 
-:Noname_29    
-if
-    0206:   actor $PLAYER_ACTOR near_car 20@(30@,2i) radius 15.0 15.0 10.0 flag 0 on_foot
-jf @Noname_226
-jump @Noname_30
-
-:Noname_30
-06AC: 23@ = actor $PLAYER_ACTOR movement_speed       
-if
-    23@ < 5.0
-jf @Noname_226
-Car.SetMaxSpeed(20@(30@,2i),15)
-
-:Noname_32
+:Noname_676        
 wait 0
-0633: AS_actor 10@(30@,2i) exit_car 
-0633: AS_actor 12@(30@,2i) exit_car
-//060A: create_decision_maker_type 0 store_to 27@ // decision\allowed\m_.ped files
-//060B: set_actor 10@(30@,2i) decision_maker_to 27@
-//060B: set_actor 12@(30@,2i) decision_maker_to 27@     
-06E4: AS_actor 10@(30@,2i) attempt_to_bust_actor $PLAYER_ACTOR
-06E4: AS_actor 12@(30@,2i) attempt_to_bust_actor $PLAYER_ACTOR                  
+0633: AS_actor 10@ exit_car 
+0633: AS_actor 11@ exit_car 
+//05E2: AS_actor 10@ kill_actor $PLAYER_ACTOR 
+//05E2: AS_actor 11@ kill_actor $PLAYER_ACTOR 
+jump @Noname_996 
 
-:Noname_42
-wait 100   
-if or
-00F2:   actor 10@(30@,2i) near_actor $PLAYER_ACTOR radius 150.0 150.0 0 
-00F2:   actor 12@(30@,2i) near_actor $PLAYER_ACTOR radius 150.0 150.0 0
-jf @Noname_122
-if or
-    not Actor.Dead(10@(30@,2i))
-    not Actor.Dead(12@(30@,2i))
-jf @Noname_122
-if     
-    09DE: actor $PLAYER_ACTOR entering_car                                
-    //not Actor.Driving($PLAYER_ACTOR)
-jf @Noname_226
-jump @Noname_122
 
-:Noname_52
-wait 0
-Car.SetMaxSpeed(20@(30@,2i),0)
-if
-    not Actor.Dead(12@(30@,2i))
-jf @Noname_122
-0633: AS_actor 12@(30@,2i) exit_car
-jump @Noname_122
-
-:Noname_122
+:Noname_996
 wait 0 
-03E5: show_text_box 'HELP101' 
-Actor.RemoveReferences(10@(30@,2i))
-Actor.RemoveReferences(12@(30@,2i))
-Car.RemoveReferences(20@(30@,2i))
-03CD: disable_car 20@(30@,2i) stuck_check
-//065C: release_decision_maker 27@
-10@(30@,2i) = 0
-12@(30@,2i) = 0
-20@(30@,2i) = 0
-jump @Noname_226
-
-:Noname_226
-30@ += 1
-if
-    //001D:  30@ > 31@  // (int)
-    30@ > 1
-jf @Noname_9
-30@ = 0
-jump @Noname_2
-
-:Noname_15
-wait 1
 if and
-    Player.WantedLevel($PLAYER_CHAR) > 3
-    Player.Defined($PLAYER_CHAR)
-jf @Noname_378
-Actor.StorePos($PLAYER_ACTOR, 7@, 8@, 9@)
-092E: get_water_height_at 7@ 8@ ignore_waves 0 store_to 9@
-if 
-    9@ < 10.0
-jf @Noname_226
-
-:Noname_15A
-if
-  $ACTIVE_INTERIOR == 0
-jf @Noname_226
-1@ = #BARRACKS
-3@ = 31
-if
-    Player.WantedLevel($PLAYER_CHAR) > 3
-jf @Noname_15B  
-jump @Noname_17
-
-:Noname_15B
-if
-    Player.WantedLevel($PLAYER_CHAR) > 2
-jf @Noname_15C
-0209: 0@ = random_int_in_ranges 0 100
-if 0@ < 50
-jf @Noname_15C
-jump @Noname_17
-
-:Noname_15C
-1@ = #PATRIOT
-3@ = 22
-jump @Noname_17
-
-:Noname_17
-Model.Load(1@)
-0781: get_weapon_with_ID 3@ model_to 27@ 
-Model.Load(27@)
-038B: load_requested_models
-
-:Noname_18
-wait 1
+   Player.WantedLevel($PLAYER_CHAR) > 1
+   not Actor.Dead($PLAYER_ACTOR)
+   0741:  not actor $PLAYER_ACTOR busted 
+jf @Noname_1154 
+if or
+00F2:   actor 10@ near_actor $PLAYER_ACTOR radius 150.0 150.0 50.0 
+00F2:   actor 11@ near_actor $PLAYER_ACTOR radius 150.0 150.0 50.0 
+jf @Noname_1154 
 if and
-    Model.Available(1@)
-    Model.Available(3@)
-jf @Noname_18
-Actor.StorePos($PLAYER_ACTOR, 7@, 8@, 9@)
-0208: 6@ = random_float_in_ranges 0.0 360.0 
-02F7: 4@ = cosine 6@ // (float) 
-02F6: 5@ = sine 6@ // (float)
-28@ = -10.0
-006A: 28@ *= 30@  // (int)
-28@ += 100.0
-006B: 4@ *= 28@ // (float)
-006B: 5@ *= 28@ // (float)
-0063: 7@ -= 4@ // (float) 
-0063: 8@ -= 5@ // (float) 
-02CE: 9@ = ground_z_at 7@ 8@ 9@ 
-04D3: get_nearest_car_path_coords_from 7@ 8@ 9@ type 2 store_to 7@ 8@ 9@ 
-Car.Create(20@(30@,2i), 1@, 7@, 8@, 9@)
-Actor.CreateAsDriver(10@(30@,2i), PedType.Cop, #ARMY, 20@(30@,2i))
-Actor.CreateAsPassenger(12@(30@,2i), PedType.Cop, #ARMY, 20@(30@,2i), 0)
-Actor.Health(10@(30@,2i)) = 300
-Actor.Health(12@(30@,2i)) = 300 
-Actor.GiveWeaponAndAmmo(10@(30@,2i), 3@, 99999)
-Actor.GiveWeaponAndAmmo(12@(30@,2i), 3@, 99999)
-0397: enable_car 20@(30@,2i) siren 1
-0423: set_car 20@(30@,2i) improved_handling_to 2.0 // (float)  
-Car.SetMaxSpeed(20@(30@,2i), 60.0)
-03CC: enable_car 20@(30@,2i) stuck_check_distance_to 2.0 time_to 5000
-053F: set_car 20@(30@,2i) tires_vulnerability 0 
-00AE: set_car 20@(30@,2i) traffic_behaviour_to 2
-00AF: set_car 20@(30@,2i) driver_behaviour_to 2
-Model.Destroy(1@)  
-Model.Destroy(27@)
-jump @Noname_226  
+   Actor.Dead(10@)
+   Actor.Dead(11@)
+jf @Noname_996 
+jump @Noname_1154
 
-:Noname_378
-wait 1
-30@ = 0
-jump @Noname_550   
-
-:Noname_550
-wait 1
-jump @Noname_01 
-                          
+:Noname_1154
+wait 0 
+Actor.RemoveReferences(10@)
+Actor.RemoveReferences(11@)
+Car.RemoveReferences(0@)
+Model.Destroy(30@)
+Model.Destroy(29@)
+Model.Destroy(#ARMY)
+0209: 30@ = random_int_in_ranges 10000 20000 
+wait 30@ 
+jump @Noname_6 

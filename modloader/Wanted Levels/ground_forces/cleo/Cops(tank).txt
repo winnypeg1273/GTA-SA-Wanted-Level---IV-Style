@@ -16,7 +16,6 @@ jf @Noname_6
 Model.Load(#RHINO)
 Model.Load(#M4)
 Model.Load(#ARMY)
-038B: load_requested_models 
 
 :Noname_58
 wait 300 
@@ -24,7 +23,7 @@ if and
    Model.Available(#RHINO)
    Model.Available(#M4)
    Model.Available(#ARMY)
-jf @Noname_58 
+jf @Noname_6 
 wait 0 
 0209: 5@ = random_int_in_ranges 50.0 100.0 
 0209: 6@ = random_int_in_ranges 50.0 100.0 
@@ -38,10 +37,7 @@ Actor.GiveWeaponAndAmmo(10@, #M4, 99999)
 0423: set_car 0@ improved_handling_to 2.0 // (float) 
 Car.SetMaxSpeed(0@, 60.0)
 Car.SetDriverBehaviour(0@, CarMission.BlockPlayerFaraway)     
-00AE: set_car 0@ traffic_behaviour_to 2
-Model.Destroy(#RHINO)
-Model.Destroy(#M4)
-Model.Destroy(#ARMY) 
+00AE: set_car 0@ traffic_behaviour_to 2 
 
 :Noname_105
 wait 500       
@@ -83,6 +79,9 @@ jump @Noname_1154
 wait 0 
 Actor.RemoveReferences(10@)
 Car.RemoveReferences(0@)
+Model.Destroy(#RHINO)
+Model.Destroy(#M4)
+Model.Destroy(#ARMY)
 0209: 10@ = random_int_in_ranges 10000 20000 
 wait 10@ 
 jump @Noname_6 

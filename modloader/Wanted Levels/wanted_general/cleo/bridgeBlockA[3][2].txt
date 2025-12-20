@@ -165,10 +165,9 @@ $rbf *= 90.0
 
 
 :RBLOCK_149 
-//07D0: 32@ = weekday
-if or
-$WEEKDAY == 1    //Sat or Sun
-$WEEKDAY == 7
+0652: 31@ = integer_stat 82
+if
+31@ == 1
 jf @RBLOCK_150
 $rb_gun = 22
 $rb_car = #COPCARRU
