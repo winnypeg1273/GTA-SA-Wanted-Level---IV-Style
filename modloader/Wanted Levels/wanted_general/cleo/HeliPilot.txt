@@ -1,0 +1,182 @@
+// This file was decompiled using SASCM.ini published on 2021-01-30
+{$CLEO .cs}
+
+0000: NOP 
+
+:Noname_2
+wait 100 
+if 
+   Player.Defined($PLAYER_CHAR)
+jf @Noname_2 
+if 
+   Player.WantedLevel($PLAYER_CHAR) > 2
+jf @Noname_2 
+if or
+0154:   actor $PLAYER_ACTOR in_zone 'SF'  // San Fierro
+0154:   actor $PLAYER_ACTOR in_zone 'RED'  // Red County
+0154:   actor $PLAYER_ACTOR in_zone 'FLINTC'  // Flint County
+0154:   actor $PLAYER_ACTOR in_zone 'WHET'  // Whetstone
+jf @Noname_122 
+5@ = 285
+jump @Noname_297 
+
+:Noname_122
+if 
+   Player.Defined($PLAYER_CHAR)
+jf @Noname_2 
+if or
+0154:   actor $PLAYER_ACTOR in_zone 'VE'  // Las Venturas
+0154:   actor $PLAYER_ACTOR in_zone 'ROBAD'  // Tierra Robada
+0154:   actor $PLAYER_ACTOR in_zone 'BONE'  // Bone County
+jf @Noname_206 
+5@ = 285 
+jump @Noname_297 
+
+:Noname_206
+if 
+   Player.Defined($PLAYER_CHAR)
+jf @Noname_2 
+if or
+0154:   actor $PLAYER_ACTOR in_zone 'LA'  // Los Santos
+0154:   actor $PLAYER_ACTOR in_zone 'RED'  // Red County
+0154:   actor $PLAYER_ACTOR in_zone 'FLINTC'  // Flint County
+0154:   actor $PLAYER_ACTOR in_zone 'WHET'  // Whetstone
+jf @Noname_2 
+5@ = 285 
+
+:Noname_297
+read_memory 0@ 12700004 4 0 
+gosub @Noname_325 
+jump @Noname_679 
+
+:Noname_325
+if 
+  0@ > 0 
+jf @Noname_599 
+if 
+803B:   not  1@ == 0@ // (int) 
+jf @Noname_1061 
+read_memory 1@ 12010644 4 0 
+call_method_return 4342112 1@ 1 0 0@ 1@ 
+046C: 2@ = car 1@ driver 
+if 
+   not 2@ > 0 
+jf @Noname_599 
+if 
+   Car.Model(1@) == #VCNMAV
+jf @Noname_522 
+Model.Load(#MALE01)
+Model.Load(#SBFYRI)
+
+:Noname_452
+wait 0 
+if and
+   Model.Available(#MALE01)
+   Model.Available(#SBFYRI)
+jf @Noname_452 
+Actor.CreateAsDriver(3@, PedType.CivMale, #MALE01, 1@)
+Actor.CreateAsPassenger(4@, PedType.CivFemale, #SBFYRI, 1@, 0)
+Model.Destroy(#MALE01)
+Model.Destroy(#SBFYRI)
+jump @Noname_599 
+
+:Noname_522
+if 
+   Car.Model(1@) == #POLMAV
+jf @Noname_599 
+Model.Load(5@)
+
+:Noname_546
+wait 0 
+if 
+   Model.Available(5@)
+jf @Noname_546 
+Actor.CreateAsDriver(3@, PedType.Cop, 5@, 1@)
+Actor.CreateAsPassenger(4@, PedType.Cop, 5@, 1@, 0)
+Model.Destroy(5@)
+
+:Noname_599
+if
+051A:   actor 3@ damaged_by_actor $PLAYER_ACTOR 
+jf @Noname_1061 
+0564: heli 1@ simulate_crash_landing 
+wait 2500 
+16@ = Car.Health(1@)
+if 
+  16@ > 100 
+jf @Noname_1061 
+Car.Health(1@) = 240
+Actor.RemoveReferences(3@)
+Actor.RemoveReferences(4@)
+Car.RemoveReferences(1@)
+return 
+
+:Noname_679
+read_memory 10@ 12700008 4 0 
+gosub @Noname_707 
+jump @Noname_2 
+
+:Noname_707
+if 
+  10@ > 0 
+jf @Noname_981 
+if 
+803B:   not  10@ == 0@ // (int) 
+jf @Noname_1061 
+read_memory 11@ 12010644 4 0 
+call_method_return 4342112 11@ 1 0 10@ 11@ 
+046C: 12@ = car 11@ driver 
+if 
+   not 12@ > 0 
+jf @Noname_981 
+if 
+   Car.Model(11@) == #VCNMAV
+jf @Noname_904 
+Model.Load(#MALE01)
+Model.Load(#SBFYRI)
+
+:Noname_834
+wait 0 
+if and
+   Model.Available(#MALE01)
+   Model.Available(#SBFYRI)
+jf @Noname_834 
+Actor.CreateAsDriver(13@, PedType.CivMale, #MALE01, 11@)
+Actor.CreateAsPassenger(14@, PedType.CivFemale, #SBFYRI, 11@, 0)
+Model.Destroy(#MALE01)
+Model.Destroy(#SBFYRI)
+jump @Noname_981 
+
+:Noname_904
+if 
+   Car.Model(11@) == #POLMAV
+jf @Noname_981 
+Model.Load(5@)
+
+:Noname_928
+wait 0 
+if 
+   Model.Available(5@)
+jf @Noname_928 
+Actor.CreateAsDriver(13@, PedType.Cop, 5@, 11@)
+Actor.CreateAsPassenger(14@, PedType.Cop, 5@, 11@, 0)
+Model.Destroy(5@)
+
+:Noname_981
+if
+051A:   actor 13@ damaged_by_actor $PLAYER_ACTOR 
+jf @Noname_1061 
+0564: heli 11@ simulate_crash_landing 
+wait 2500 
+17@ = Car.Health(11@)
+if 
+  17@ > 100 
+jf @Noname_1061 
+Car.Health(11@) = 240
+Actor.RemoveReferences(13@)
+Actor.RemoveReferences(14@)
+Car.RemoveReferences(11@)
+return 
+
+:Noname_1061
+return 
