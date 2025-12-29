@@ -110,23 +110,28 @@ IF
     30@ == 0
 THEN
     27@ = #ENFORCER
+    28@ = #ENFORCER
 ELSE
     27@ = #FBIRANCH
 END     
 
-28@ = #COPCARRU
-IF 0583: player $PLAYER_CHAR in_zone 'LA'
+IF
+    30@ == 1
 THEN
-    28@ = #COPCARLA
-END
-IF 0583: player $PLAYER_CHAR in_zone 'SF'
-THEN
-    28@ = #COPCARSF
-END
-IF 0583: player $PLAYER_CHAR in_zone 'VE'
-THEN
-    28@ = #COPCARVG
-END        
+    28@ = #COPCARRU
+    IF 0583: player $PLAYER_CHAR in_zone 'LA'
+    THEN
+        28@ = #COPCARLA
+    END
+    IF 0583: player $PLAYER_CHAR in_zone 'SF'
+    THEN
+        28@ = #COPCARSF
+    END
+    IF 0583: player $PLAYER_CHAR in_zone 'VE'
+    THEN
+        28@ = #COPCARVG
+    END 
+END       
 
 0A8C: 4@ 4 #COPCARRU 1            
 0A8C: 5@ 4 #COPCARLA 1
