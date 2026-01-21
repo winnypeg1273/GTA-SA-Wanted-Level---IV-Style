@@ -26,3 +26,4 @@ This mod alters police response in GTA SA to be more like GTA IV:
 ## Other features
 * The tank has also been nerfed so that it may take a little damage from nearby explosions. Be mindful when you shoot the cannon or crush cars.
 * When the tank's HP gets to the lower half, it will emit smoke and the engine will stop for a few seconds after firing the cannon.
+* If a police car is disabled, the officer will get out and use a nearby civilian car to continue the chase
