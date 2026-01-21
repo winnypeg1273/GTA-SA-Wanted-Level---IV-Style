@@ -1,0 +1,42 @@
+{$CLEO .cs}
+0000:
+:Noname_01
+wait 0
+if and
+    Player.Defined($PLAYER_CHAR)
+    not Player.WantedLevel($PLAYER_CHAR) > 5
+jf @Noname_01
+if or
+  0154:   actor $PLAYER_ACTOR in_zone 'REST'
+  0583:   player $PLAYER_CHAR in_zone 'EASB1'
+  0583:   player $PLAYER_CHAR in_zone 'LAIR2B'
+jf @Noname_01
+
+:Noname_02
+if and
+0A0C:   player $PLAYER_CHAR on_jetpack
+00FE:   actor $PLAYER_ACTOR sphere 0 in_sphere 267.6046 1881.8816 -30.0450 radius 15.0 15.0 3.0
+jf @Noname_03
+jump @Noname_05
+
+:Noname_03
+if 
+  Actor.DrivingVehicleType($PLAYER_ACTOR, #HYDRA)
+jf @Noname_04
+if
+  00E1:   player 0 pressed_key 4
+jf @Noname_01
+jump @Noname_05
+
+:Noname_04
+if
+Actor.DrivingVehicleType($PLAYER_ACTOR, #HUNTER)
+jf @Noname_01
+if
+00E1:   player 0 pressed_key 17
+jf @Noname_01
+jump @Noname_05
+
+:Noname_05
+Player.SetMinWantedLevel(0,6)
+jump @Noname_01

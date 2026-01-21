@@ -1,0 +1,39 @@
+{$CLEO .cs}
+{$USE CLEO+}
+0000:
+
+:Noname_1
+wait 0
+if
+    Player.Defined($PLAYER_CHAR)
+jf @Noname_1
+if
+    Player.WantedLevel($PLAYER_CHAR) > 3
+jf @Noname_1
+0652: 10@ = integer_stat 82
+01C0: 11@ = player $PLAYER_CHAR wanted_level 
+if and
+    10@ == 1
+    11@ == 4
+jf @Noname_1
+jump @Noname_7
+
+:Noname_7
+Actor.StorePos($PLAYER_ACTOR, 0@, 1@, 2@)
+0AE2: 3@ = random_vehicle_near_point 0@ 1@ 2@ in_radius 250.0 find_next 1 pass_wrecked 1
+if
+    056E:   car 3@ defined
+jf @Noname_13
+if
+    0137:   car 3@ model == #ENFORCER
+jf @Noname_13
+046C: 1@ = car 3@ driver
+if
+    056D:   actor 1@ defined
+jf @Noname_13
+Car.Destroy(3@)
+3@ = 0
+1@ = 0
+   
+:Noname_13
+jump @Noname_1

@@ -1,0 +1,213 @@
+// This file was decompiled using SASCM.ini published on 2021-01-30
+{$CLEO .cs}
+
+0000: NOP 
+script_name 'COPS_STEAL' 
+
+:COPS_STEAL_21
+wait 0
+if and
+    Player.Defined($PLAYER_CHAR)
+    $ACTIVE_INTERIOR == 0
+    $ONMISSION == 0
+jf @COPS_STEAL_21 
+if and
+   Player.WantedLevel($PLAYER_CHAR) > 1
+   Actor.Driving($PLAYER_ACTOR)
+jf @COPS_STEAL_21
+04C4: store_coords_to 1@ 2@ 3@ from_actor $PLAYER_ACTOR with_offset 0.0 0.0 0.0 
+0AE2: 7@ = random_vehicle_near_point 1@ 2@ 3@ in_radius 30.0 find_next 1 pass_wrecked 1
+if 
+    056E:   car 7@ defined 
+jf @COPS_STEAL_21 
+
+:COPS_STEAL_268
+wait 0 
+if or
+   Car.Model(7@) == #COPCARLA
+   Car.Model(7@) == #COPCARRU
+   Car.Model(7@) == #COPCARSF
+   Car.Model(7@) == #COPCARVG
+   Car.Model(7@) == #ENFORCER
+jf @COPS_STEAL_936
+0@ = Car.Health(7@)
+if or
+    0@ < 250
+    01F4:   car 7@ flipped
+jf @COPS_STEAL_936
+ 
+:COPS_STEAL_337
+wait 0 
+046C: 11@ = car 7@ driver 
+if 
+    056D:   actor 11@ defined 
+jf @COPS_STEAL_936
+if
+    not Actor.Dead(11@)
+jf @COPS_STEAL_936
+jump @COPS_STEAL_447
+
+
+:COPS_STEAL_936
+Car.RemoveReferences(7@)
+if
+    056D:   actor 11@ defined
+jf @COPS_STEAL_21
+Actor.RemoveReferences(11@)
+jump @COPS_STEAL_21    
+
+
+
+:COPS_STEAL_447
+wait 0 
+0622: AS_actor 11@ bail_car 7@
+068B: set_car 7@ all_disembark
+02AB: set_actor 11@ immunities BP 0 FP 1 EP 1 CP 0 MP 0 
+04D8: set_actor 11@ drowns_in_water 1
+wait 0
+Car.RemoveReferences(7@)
+
+
+:COPS_STEAL_487
+wait 0 
+if
+    Player.Defined($PLAYER_CHAR)
+jf @COPS_STEAL_913
+if and
+    0104:   actor $PLAYER_ACTOR near_actor 11@ radius 100.0 100.0 50.0 sphere 0
+    Actor.Driving($PLAYER_ACTOR)
+jf @COPS_STEAL_913
+if
+    not Actor.Dead(11@)
+jf @COPS_STEAL_913
+Actor.StorePos(11@, 1@, 2@, 3@)
+//073E: get_car_in_sphere 1@ 2@ 3@ radius 30.0 model -1 handle_as 8@
+0AE2: 8@ = random_vehicle_near_point 1@ 2@ 3@ in_radius 30.0 find_next 1 pass_wrecked 1
+if
+    056E:   car 8@ defined
+jf @COPS_STEAL_487
+0@ = Car.Health(8@)
+if
+    0@ > 250
+jf @COPS_STEAL_489
+if
+    not Actor.InCar($PLAYER_ACTOR, 8@)
+jf @COPS_STEAL_489
+046C: 9@ = car 8@ driver
+if
+      9@ == -1
+jf @COPS_STEAL_488
+jump @COPS_STEAL_510
+
+:COPS_STEAL_488
+089F: get_actor 9@ pedtype_to 17@
+if and
+    not 17@ == 6
+    not 17@ == 0
+jf @COPS_STEAL_489
+jump @COPS_STEAL_510
+
+:COPS_STEAL_489
+Car.RemoveReferences(8@)
+
+:COPS_STEAL_913
+wait 0 
+Actor.RemoveReferences(11@)
+jump @COPS_STEAL_21 
+
+
+
+:COPS_STEAL_510
+//06E1: AS_actor 11@ using_car 8@ target_car 16@ with_order 2 max_speed 120.0 traffic_flag 2
+05CB: AS_actor 11@ enter_car 8@ as_driver 10000 ms
+Model.Load(#COLT45)
+038B: load_requested_models
+Actor.GiveWeaponAndAmmo(11@, 22, 9999)
+
+:COPS_STEAL_592
+wait 0
+0513: show_text_box_1number 'SLOT_02' number 2  // ~k~~VEHICLE_ENTER_EXIT~ Use Slot Machine $~1~
+if and
+    Player.Defined($PLAYER_CHAR)
+    Player.WantedLevel($PLAYER_CHAR) > 1
+jf @COPS_STEAL_910
+if and
+    0104:   actor $PLAYER_ACTOR near_actor 11@ radius 100.0 100.0 50.0 sphere 0
+    0205:   actor 11@ near_car 8@ radius 30.0 30.0 50.0 flag 0
+jf @COPS_STEAL_910
+0@ = Car.Health(8@)
+if and
+    not Actor.Dead(11@)
+    0@ > 250 
+jf @COPS_STEAL_910
+Car.SetMaxSpeed(8@, 0.0)
+
+
+:COPS_STEAL_599
+if
+   Actor.InCar(11@, 8@)
+jf @COPS_STEAL_592
+03C0: 8@ = actor 11@ car 
+0397: enable_car 8@ siren 1
+if or
+    04C8:   actor 11@ driving_flying_vehicle
+    04A7:   actor 11@ driving_boat
+jf @COPS_STEAL_618
+0633: AS_actor 11@ exit_car
+jump @COPS_STEAL_910   
+ 
+
+:COPS_STEAL_618
+wait 0
+03E6: remove_text_box 
+Car.SetMaxSpeed(8@, 120.0)
+0423: set_car 8@ improved_handling_to 2.0 // (float)  
+00A8: set_car 8@ to_psycho_driver
+00AE: set_car 8@ traffic_behaviour_to 2
+00AF: set_car 8@ driver_behaviour_to 4
+if
+    047A:   actor 11@ driving_bike
+jf @COPS_STEAL_910
+    0713: actor 11@ driveby_actor $PLAYER_ACTOR car -1 point 0.0 0.0 0.0 radius 5000.0 8 1 firing_rate 40
+jump @COPS_STEAL_910
+
+               
+:COPS_STEAL_768
+wait 0  
+if
+    Player.Defined($PLAYER_CHAR)
+jf @COPS_STEAL_910
+if
+    0205:   actor $PLAYER_ACTOR near_car 8@ radius 200.0 200.0 150.0 flag 0
+jf @COPS_STEAL_910
+if and
+   not Actor.Dead(11@)
+   Actor.InCar(11@, 8@)
+jf @COPS_STEAL_910
+0@ = Car.Health(8@)
+if
+    0@ > 250
+jf @COPS_STEAL_815
+if
+    Player.WantedLevel($PLAYER_CHAR) > 1
+jf @COPS_STEAL_818
+if
+    0206: actor $PLAYER_ACTOR near_car 8@ radius 15.0 15.0 3.0 flag 0 on_foot
+jf @COPS_STEAL_768
+jump @COPS_STEAL_818
+
+:COPS_STEAL_815
+0622: AS_actor 11@ bail_car 8@
+jump @COPS_STEAL_910 
+
+:COPS_STEAL_818
+05CD: AS_actor 11@ exit_car 8@
+jump @COPS_STEAL_910  
+
+:COPS_STEAL_910
+wait 0 
+03E5: show_text_box 'HELP101'
+Car.RemoveReferences(8@)
+Actor.RemoveReferences(11@)
+jump @COPS_STEAL_21 
+
