@@ -24,6 +24,9 @@ jf @COPS_STEAL_21
 
 :COPS_STEAL_268
 wait 0 
+if
+    00DB: not actor $PLAYER_ACTOR in_car 7@
+jf @COPS_STEAL_936
 if or
    Car.Model(7@) == #COPCARLA
    Car.Model(7@) == #COPCARRU
@@ -80,8 +83,10 @@ if and
     0104:   actor $PLAYER_ACTOR near_actor 11@ radius 100.0 100.0 50.0 sphere 0
     Actor.Driving($PLAYER_ACTOR)
 jf @COPS_STEAL_913        
-0687: clear_actor 11@ task
 Actor.StorePos(11@, 1@, 2@, 3@)  
+if
+    0104:  not actor $PLAYER_ACTOR near_actor 11@ radius 25.0 25.0 50.0 sphere 0 
+jf @COPS_STEAL_487   
 //073E: get_car_in_sphere 1@ 2@ 3@ radius 30.0 model -1 handle_as 8@
 0AE2: 8@ = random_vehicle_near_point 1@ 2@ 3@ in_radius 30.0 find_next 1 pass_wrecked 1
 if
@@ -127,6 +132,7 @@ jump @COPS_STEAL_21
 Model.Load(#COLT45)
 038B: load_requested_models
 Actor.GiveWeaponAndAmmo(11@, 22, 9999)
+0687: clear_actor 11@ task
 05CB: AS_actor 11@ enter_car 8@ as_driver 10000 ms
 
 :COPS_STEAL_592
@@ -143,6 +149,7 @@ if and
 jf @COPS_STEAL_910  
 if and
     0104:   actor $PLAYER_ACTOR near_actor 11@ radius 100.0 100.0 50.0 sphere 0
+    0205:   actor $PLAYER_ACTOR near_car 8@ radius 70.0 70.0 50.0 flag 0
     0205:   actor 11@ near_car 8@ radius 30.0 30.0 50.0 flag 0
 jf @COPS_STEAL_910
 0@ = Car.Health(8@)
