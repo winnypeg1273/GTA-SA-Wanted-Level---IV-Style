@@ -68,15 +68,6 @@ jf @Noname_32
 if
   9@ == 6
 jf @aimcop_70
-0@ = Player.WantedLevel($PLAYER_CHAR)
-if and
-   0457:   player $PLAYER_CHAR aiming_at_actor 11@
-   0@ == 1
-jf @aimcop_69
-//Model.Load(#COLT45)
-//Actor.GiveWeaponAndAmmo(11@,22,9999)
-Player.SetMinWantedLevel(0,2)
-jump @aimcop_77
 
 :aimcop_69
 if and
@@ -89,6 +80,7 @@ jump @aimcop_77
 :aimcop_70
 if and
     $ONMISSION==0
+    not 9@ == 24
     Actor.Model(11@)==#COPGRL3
 jf @aimcop_71
 if and

@@ -42,8 +42,10 @@ if or
    Actor.DrivingVehicleType($PLAYER_ACTOR, #BMX)
    Actor.DrivingVehicleType($PLAYER_ACTOR, #BIKE)
    Actor.DrivingVehicleType($PLAYER_ACTOR, #RHINO)
+   Actor.DrivingVehicleType($PLAYER_ACTOR, #TRAM)
    04C8:   actor $PLAYER_ACTOR driving_flying_vehicle
    04A7:   actor $PLAYER_ACTOR driving_boat
+   09AE:   actor $PLAYER_ACTOR driving_train
 jf @POLICESPIKES_12
 JUMP @POLICESPIKES_1
 
