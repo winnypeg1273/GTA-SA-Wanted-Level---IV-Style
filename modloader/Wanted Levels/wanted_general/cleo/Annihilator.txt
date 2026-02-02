@@ -1,23 +1,28 @@
 // This file was decompiled using SASCM.ini published on 2021-01-30
 {$CLEO .cs}
+{$USE CLEO+}
 
 0000: NOP
 
 :Noname_01
-wait 500
+wait 0
 if
     Player.Defined($PLAYER_CHAR)
 jf @Noname_01
 0652: 9@ = integer_stat 82
 
 :Noname_2
-wait 500 
+wait 0 
 if and
    Player.WantedLevel($PLAYER_CHAR) > 4
    $ACTIVE_INTERIOR == 0   
 jf @Noname_01
 if
     9@ == 0
+jf @Noname_01
+0D59: 1@ = current_weather
+if
+    not 1@ == 19
 jf @Noname_01
 29@ = 0
 096A: enable_flying_helis 0
@@ -127,12 +132,12 @@ if
    Actor.Dead(4@(28@,2i))
 jf @Noname_244
 0564: heli 10@(28@,2i) simulate_crash_landing 
-wait 2500 
+02AA: set_car 10@(28@,2i) immune_to_nonplayer 0
 0@ = Car.Health(10@(28@,2i))
 if 
-  0@ > 100 
+  0@ > 250 
 jf @Noname_242 
-Car.Health(10@(28@,2i)) = 240
+Car.Health(10@(28@,2i)) = 250
 jump @Noname_237
 
 :Noname_237
