@@ -5,9 +5,10 @@ thread 'POLICESPIKES'
 
 :POLICESPIKES_1
 wait 1000 
-if /*and
-   $ONMISSION == 0*/  
+if and
+// $ONMISSION == 0
    Player.Defined($PLAYER_CHAR) 
+   $ACTIVE_INTERIOR == 0 
 jf @POLICESPIKES_1
 if 
    Player.WantedLevel($PLAYER_CHAR) > 2
@@ -41,8 +42,10 @@ if or
    Actor.DrivingVehicleType($PLAYER_ACTOR, #BMX)
    Actor.DrivingVehicleType($PLAYER_ACTOR, #BIKE)
    Actor.DrivingVehicleType($PLAYER_ACTOR, #RHINO)
+   Actor.DrivingVehicleType($PLAYER_ACTOR, #TRAM)
    04C8:   actor $PLAYER_ACTOR driving_flying_vehicle
    04A7:   actor $PLAYER_ACTOR driving_boat
+   09AE:   actor $PLAYER_ACTOR driving_train
 jf @POLICESPIKES_12
 JUMP @POLICESPIKES_1
 
@@ -100,8 +103,8 @@ Actor.PutAt(14@, 4@, 5@, 6@)
 0350: set_actor 14@ maintain_position_when_attacked 1 
 07DD: set_actor 14@ attack_rate 70 // previously known as temper_to
 099F: AS_actor 14@ ignore_weapon_range 1
-06E4: AS_actor 14@ attempt_to_bust_actor $PLAYER_ACTOR
-//05E2: AS_actor 14@ kill_actor $PLAYER_ACTOR 
+//06E4: AS_actor 14@ attempt_to_bust_actor $PLAYER_ACTOR
+05E2: AS_actor 14@ kill_actor $PLAYER_ACTOR 
 16@ = 2
 
 :POLICESPIKES_52
@@ -114,9 +117,9 @@ jf @POLICESPIKES_6001
 0@ = 0
  
 :POLICESPIKES_81
-IF
-03CA:   object 10@ exists 
-jf @POLICESPIKES_6001
+//IF
+//03CA:   object 10@ exists 
+//jf @POLICESPIKES_6001
 if
 0471:   actor $PLAYER_ACTOR near_object_in_rectangle 10@ radius 150.0 150.0 flag 0
 jf @POLICESPIKES_6001
@@ -144,9 +147,9 @@ jf @POLICESPIKES_52
 Car.RemoveReferences(0@)
    
 :POLICESPIKES_5999
-IF
-03CA:   object 10@ exists 
-jf @POLICESPIKES_6001
+//IF
+//03CA:   object 10@ exists 
+//jf @POLICESPIKES_6001
 IF
 0471:   actor $PLAYER_ACTOR near_object_in_rectangle 10@ radius 150.0 150.0 flag 0
 jf @POLICESPIKES_6001

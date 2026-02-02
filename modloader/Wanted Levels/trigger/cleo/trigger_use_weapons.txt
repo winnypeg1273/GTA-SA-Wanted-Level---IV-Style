@@ -19,39 +19,30 @@ if
 jf @Noname_2
 
 :aimcop_32
-if or
-   02D8:   actor $PLAYER_ACTOR current_weapon == 22
-   02D8:   actor $PLAYER_ACTOR current_weapon == 23
-   02D8:   actor $PLAYER_ACTOR current_weapon == 24
-   02D8:   actor $PLAYER_ACTOR current_weapon == 25
-   02D8:   actor $PLAYER_ACTOR current_weapon == 26
-   02D8:   actor $PLAYER_ACTOR current_weapon == 27
-jf @aimcop_33
-jump @aimcop_48
-
-:aimcop_33
-wait 0  
-if or
-   02D8:   actor $PLAYER_ACTOR current_weapon == 28
-   02D8:   actor $PLAYER_ACTOR current_weapon == 29
-   02D8:   actor $PLAYER_ACTOR current_weapon == 30
-   02D8:   actor $PLAYER_ACTOR current_weapon == 31
-   02D8:   actor $PLAYER_ACTOR current_weapon == 32     
+0470: 12@ = actor $PLAYER_ACTOR current_weapon
+if and
+    12@ > 21
+    12@ < 34
 jf @heavy_fire_01
 jump @aimcop_48
 
+
 :heavy_fire_01
-if and
+/*if and
     $ONMISSION == 0
-    not Player.WantedLevel($PLAYER_CHAR) > 1
-jf @Noname_2
+    not Player.WantedLevel($PLAYER_CHAR) > 2
+jf @Noname_2 */
+0470: 12@ = actor $PLAYER_ACTOR current_weapon
 if or
-   02D8:   actor $PLAYER_ACTOR current_weapon == 16
-   02D8:   actor $PLAYER_ACTOR current_weapon == 18
-   02D8:   actor $PLAYER_ACTOR current_weapon == 39
-   02D8:   actor $PLAYER_ACTOR current_weapon == 35
-   02D8:   actor $PLAYER_ACTOR current_weapon == 36
-   02D8:   actor $PLAYER_ACTOR current_weapon == 37 
+    12@ == 16
+    12@ == 18
+jf @heavy_fire_02
+jump @heavy_fire_33   
+
+:heavy_fire_02
+if and
+    12@ > 34
+    12@ < 41
 jf @Noname_32
 jump @heavy_fire_33 
                       
@@ -64,23 +55,10 @@ get_char_player_is_targeting 11@ $PLAYER_CHAR
 if 
    not 11@ == -1 
 jf @Noname_32 
-if
-    02D8:   actor $PLAYER_ACTOR current_weapon == 23
-then jump @aimped_01
-end
 089F: get_actor 11@ pedtype_to 9@
 if
   9@ == 6
 jf @aimcop_70
-0@ = Player.WantedLevel($PLAYER_CHAR)
-if and
-   0457:   player $PLAYER_CHAR aiming_at_actor 11@
-   0@ == 1
-jf @aimcop_69
-//Model.Load(#COLT45)
-//Actor.GiveWeaponAndAmmo(11@,22,9999)
-Player.SetMinWantedLevel(0,2)
-jump @aimcop_77
 
 :aimcop_69
 if and
@@ -93,6 +71,7 @@ jump @aimcop_77
 :aimcop_70
 if and
     $ONMISSION==0
+    not 9@ == 24
     Actor.Model(11@)==#COPGRL3
 jf @aimcop_71
 if and
@@ -118,7 +97,17 @@ jump @aimcop_77
 if or
   9@ == 4
   9@ == 5
+  9@ == 20
+  9@ == 23
+jf @aimcop_77  
+0470: 13@ = actor 11@ current_weapon
+//0E44: get_char_kill_target_char 11@ store_to 12@
+if or
+    13@ > 42
+    13@ < 16
+    //07D6: not 12@ == $PLAYER_ACTOR  // int
 jf @aimcop_77
+12@ = 0
 
 :aimped_12
 0EA5: get_closest_cop_near_char $PLAYER_ACTOR radius 20.0 alive 1 in_car 1 on_foot 1 seen_in_front 1 store_to 7@
@@ -139,6 +128,7 @@ if
    0457:   player $PLAYER_CHAR aiming_at_actor 11@
 jf @aimped_77
 Player.SetMinWantedLevel(0,1)
+
 
 :aimped_77
 11@ = 0
