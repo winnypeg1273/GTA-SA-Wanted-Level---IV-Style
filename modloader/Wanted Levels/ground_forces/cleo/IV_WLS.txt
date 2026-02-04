@@ -98,8 +98,8 @@ IF
     $ONMISSION == 1
 THEN
     IF OR
-    0741:   actor $PLAYER_ACTOR busted
-    0118:   actor $PLAYER_ACTOR dead
+        0741:   actor $PLAYER_ACTOR busted
+        0118:   actor $PLAYER_ACTOR dead
     THEN
     BREAK
     END
@@ -110,28 +110,10 @@ IF
     30@ == 0
 THEN
     27@ = #ENFORCER
-    28@ = #ENFORCER
 ELSE
     27@ = #FBIRANCH
-END     
-
-IF
-    30@ == 1
-THEN
-    28@ = #COPCARRU
-    IF 0583: player $PLAYER_CHAR in_zone 'LA'
-    THEN
-        28@ = #COPCARLA
-    END
-    IF 0583: player $PLAYER_CHAR in_zone 'SF'
-    THEN
-        28@ = #COPCARSF
-    END
-    IF 0583: player $PLAYER_CHAR in_zone 'VE'
-    THEN
-        28@ = #COPCARVG
-    END 
 END       
+0085: 28@ = 27@     
 
 0A8C: 4@ 4 #COPCARRU 1            
 0A8C: 5@ 4 #COPCARLA 1
@@ -141,31 +123,48 @@ END
 01C0: 0@ = player $PLAYER_CHAR wanted_level
 WHILE 0039:   0@ == 4  
         wait 0
-        01C0: 0@ = player $PLAYER_CHAR wanted_level    
+        01C0: 0@ = player $PLAYER_CHAR wanted_level 
+            IF
+                30@ == 0
+            THEN
+                28@ = #ENFORCER
+            ELSE
+                gosub @COP_ZONES
+            END
+            
+            0A8C: 10@ 4 28@ 1
+       
         0A8C: 4@ 4 27@ 1
         0A8C: 5@ 4 27@ 1
         0A8C: 6@ 4 27@ 1
-        0A8C: 7@ 4 27@ 1       
+        0A8C: 7@ 4 27@ 1 
+        0A8C: 8@ 4 27@ 1      
         wait 0
         0A8C: 4@ 4 #COPCARRU 1
         0A8C: 5@ 4 #COPCARLA 1
         0A8C: 6@ 4 #COPCARSF 1
-        0A8C: 7@ 4 #COPCARVG 1
-        0A8C: 10@ 4 28@ 1
+        0A8C: 7@ 4 #COPCARVG 1 
+        0A8C: 8@ 4 27@ 1
 END  
 
 WHILE 0039:   0@ == 5
         wait 0
         01C0: 0@ = player $PLAYER_CHAR wanted_level  
         0A8C: 14@ 1 0x5 1 
-        0A8C: 9@ 4 27@ 1
-        0A8C: 11@ 4 27@ 1
+        
+        gosub @COP_ZONES
+    
+        0209: 29@ = random_int_in_ranges 0 2
+        IF
+            29@ == 0
+        THEN
+            0085: 28@ = 27@
+        END
+        
+        0A8C: 11@ 4 28@ 1 
+        0A8C: 9@ 4 28@ 1
         wait 0
         0A8C: 9@ 4 27@ 1
-        0A8C: 11@ 4 27@ 1
-        wait 0 
-        0A8C: 9@ 4 27@ 1
-        0A8C: 11@ 4 27@ 1      
 END
 0A8C: 14@ 1 0x6 1
 
@@ -173,18 +172,39 @@ END
 
 WHILE 0039:   0@ == 6         
         wait 0  
-        01C0: 0@ = player $PLAYER_CHAR wanted_level 
-        0A8C: 9@ 4 27@ 1
-        0A8C: 12@ 4 27@ 1
+        01C0: 0@ = player $PLAYER_CHAR wanted_level
+        
+        gosub @COP_ZONES
+        
+        0209: 29@ = random_int_in_ranges 0 3
+        IF
+            29@ == 0
+        THEN
+            0085: 28@ = 27@
+        END
+         
+        0A8C: 12@ 4 28@ 1
+        0A8C: 9@ 4 28@ 1
         wait 0
         0A8C: 9@ 4 27@ 1
-        0A8C: 12@ 4 27@ 1
         wait 0
         0A8C: 9@ 4 27@ 1
-        0A8C: 12@ 4 27@ 1
-        wait 0
-        0A8C: 9@ 4 27@ 1
-        0A8C: 12@ 4 27@ 1
 END 
 0A8C: 14@ 1 0x5 1 
 END 
+
+:COP_ZONES
+28@ = #COPCARRU
+IF 0583: player $PLAYER_CHAR in_zone 'LA'
+THEN
+    28@ = #COPCARLA
+END    
+IF 0583: player $PLAYER_CHAR in_zone 'SF'
+THEN
+    28@ = #COPCARSF
+END    
+IF 0583: player $PLAYER_CHAR in_zone 'VE'
+THEN
+    28@ = #COPCARVG
+END    
+RETURN
