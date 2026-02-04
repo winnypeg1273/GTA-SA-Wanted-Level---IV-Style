@@ -28,6 +28,13 @@ while true
     if 
         Player.WantedLevel($PLAYER_CHAR) > 4
     then
+    
+        0247: load_model #MICRO_UZI
+        0247: load_model #MP5LNG
+        0247: load_model #M4
+        0247: load_model #COLT45
+        038B: load_requested_models 
+        
         COND = 1
         0209: 17@ = random_int_in_ranges 1 5
         0A8D: 29@ = read_memory 0xB74490 size 4 virtual_protect 0
@@ -108,28 +115,24 @@ while true
                             then
                                 0247: load_model #M4
                                 038B: load_requested_models 
-                                01B2: give_actor COP weapon 31 ammo 600 // Load the weapon model before using this
-                                0249: release_model #M4
+                                01B2: give_actor COP weapon 31 ammo 9999 // Load the weapon model before using this
                             else
                                 if  Actor.Model(COP) == #FBI
                                 then
                                     0247: load_model #MP5LNG
                                     038B: load_requested_models 
-                                    01B2: give_actor COP weapon 29 ammo 600 // Load the weapon model before using this
-                                    0249: release_model #MP5LNG
+                                    01B2: give_actor COP weapon 29 ammo 9999 // Load the weapon model before using this
                                 else
                                     if  Actor.Model(COP) == #SWAT
                                     then
                                         0247: load_model #MICRO_UZI
                                         038B: load_requested_models  
-                                        01B2: give_actor COP weapon 28 ammo 600 // Load the weapon model before using this
-                                        0249: release_model #MICRO_UZI 
+                                        01B2: give_actor COP weapon 28 ammo 9999 // Load the weapon model before using this
 
                                     else
                                         0247: load_model #COLT45
                                         038B: load_requested_models                                    
-                                        01B2: give_actor COP weapon 22 ammo 600 // Load the weapon model before using this
-                                        0249: release_model #COLT45
+                                        01B2: give_actor COP weapon 22 ammo 9999 // Load the weapon model before using this
                                     end
                                 end
                             end
