@@ -1,0 +1,83 @@
+{$CLEO .cs}
+{$USE CLEO+}
+
+0000:
+
+:Noname_01
+wait 0 
+if and
+   Player.Defined($PLAYER_CHAR)
+   not Actor.Driving($PLAYER_ACTOR)
+   $ACTIVE_INTERIOR == 0
+jf @Noname_01
+
+:Noname_29
+wait 0
+0@ = Player.WantedLevel($PLAYER_CHAR)
+if
+   0@ < 1
+jf @Noname_01
+if or
+    0611:   actor $PLAYER_ACTOR performing_animation "FALL_land"
+    0611:   actor $PLAYER_ACTOR performing_animation "FALL_front"
+    0611:   actor $PLAYER_ACTOR performing_animation "FALL_back"
+    0611:   actor $PLAYER_ACTOR performing_animation "FALL_collapse"
+    0611:   actor $PLAYER_ACTOR performing_animation "JUMP_land"
+jf @Noname_292
+jump @Noname_30
+
+:Noname_292
+if
+    0A0C:   player $PLAYER_CHAR on_jetpack
+jf @Noname_01 
+
+:Noname_30
+0EA5: get_closest_cop_near_char $PLAYER_ACTOR radius 10.0 alive 1 in_car 1 on_foot 0 seen_in_front -1 store_to 7@
+if
+   056D:   actor 7@ defined
+jf @Noname_01
+
+:Noname_32
+089F: get_actor 7@ pedtype_to 1@
+if and
+   Actor.Driving(7@)
+   1@ == 6 // COPS
+jf @Noname_40
+03C0: 10@ = actor 7@ car
+9@ = 0
+
+:Noname_33
+wait 0
+/*0407: store_coords_to 1@ 2@ 3@ from_car 10@ with_offset 0 0 2.0
+if
+00FF:   actor $PLAYER_ACTOR sphere 0 in_sphere 1@ 2@ 3@ radius 2.0 2.5 0.5 on_foot
+jf @Noname_34*/
+if and
+    Player.Defined($PLAYER_CHAR)
+    0547:   actor $PLAYER_ACTOR colliding_with_car 10@
+jf @Noname_34
+0819: 1@ = actor $PLAYER_ACTOR distance_from_ground
+if
+    1@ > 2.0
+jf @Noname_34   
+jump @Noname_35
+
+:Noname_34
+wait 0
+9@ = 0
+if
+    0206:   actor $PLAYER_ACTOR near_car 10@ radius 10.0 10.0 5.0 flag 0 on_foot
+jf @Noname_40
+jump @Noname_33
+
+:Noname_35
+0397: enable_car 10@ siren 1
+wait 550
+Player.SetMinWantedLevel(0,1)
+
+:Noname_40
+7@ = 0
+10@ = 0
+//Actor.RemoveReferences(7@)
+//Car.RemoveReferences(10@)
+jump @Noname_01
