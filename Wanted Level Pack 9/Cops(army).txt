@@ -1,0 +1,117 @@
+// This file was decompiled using SASCM.ini published on 2021-01-30
+{$CLEO .cs}
+
+0000: NOP 
+wait 0 
+
+:Noname_6
+wait 1000 
+if and
+   Player.WantedLevel($PLAYER_CHAR) > 1 
+   00A3:   actor $PLAYER_ACTOR sphere 0 in_rectangle_cornerA -89.8039 2130.7937 cornerB 443.1514 1687.9784 //Area69
+  $ACTIVE_INTERIOR == 0 
+jf @Noname_6
+/*01C0: 29@ = player $PLAYER_CHAR wanted_level
+0652: 30@ = integer_stat 82
+if and
+    29@ == 4
+    30@ == 1
+jf @Noname_7
+jf @Noname_6        */
+
+
+:Noname_7
+if
+    Player.WantedLevel($PLAYER_CHAR) > 3
+then
+    28@ = 31
+    29@ = #M4
+    30@ = #BARRACKS
+else
+    28@ = 22
+    29@ = #COLT45
+    30@ = #PATRIOT
+end
+   
+
+:Noname_29 
+Model.Load(30@)
+Model.Load(29@)
+Model.Load(#ARMY) 
+
+:Noname_58
+wait 300 
+if and
+   Model.Available(30@)
+   Model.Available(29@)
+   Model.Available(#ARMY)
+jf @Noname_6 
+wait 0 
+0209: 5@ = random_int_in_ranges 50.0 100.0 
+0209: 6@ = random_int_in_ranges 50.0 100.0 
+04C4: store_coords_to 1@ 2@ 3@ from_actor $PLAYER_ACTOR with_offset 5@ 6@ 1.0 
+02C1: store_to 7@ 8@ 9@ car_path_coords_closest_to 1@ 2@ 3@ 
+Car.Create(0@, 30@, 7@, 8@, 9@)
+Actor.CreateAsDriver(10@, PedType.Cop, #ARMY, 0@)
+Actor.CreateAsPassenger(11@, PedType.Cop, #ARMY, 0@, 0)
+Actor.Health(10@) = 500
+Actor.Health(11@) = 500
+Actor.WeaponAccuracy(10@) = 90
+Actor.WeaponAccuracy(11@) = 90
+Actor.GiveWeaponAndAmmo(10@, 28@, 99999)
+Actor.GiveWeaponAndAmmo(11@, 28@, 99999)
+0423: set_car 0@ improved_handling_to 2.0 // (float) 
+Car.SetMaxSpeed(0@, 60.0)
+Car.SetDriverBehaviour(0@, CarMission.BlockPlayerFaraway)     
+00AE: set_car 0@ traffic_behaviour_to 2 
+
+:Noname_105
+wait 500       
+if and
+   Player.WantedLevel($PLAYER_CHAR) > 1
+   not Car.Wrecked(0@)
+   0205:   actor $PLAYER_ACTOR near_car 0@ radius 500.0 500.0 500.0 flag 0
+   00A3:   actor $PLAYER_ACTOR sphere 0 in_rectangle_cornerA -89.8039 2130.7937 cornerB 443.1514 1687.9784 //Area69
+jf @Noname_1154 
+if
+  0206:   actor $PLAYER_ACTOR near_car 0@ radius 15.0 15.0 10.0 flag 0 on_foot
+jf @Noname_105  
+jump @Noname_676
+
+:Noname_676        
+wait 0
+0633: AS_actor 10@ exit_car 
+0633: AS_actor 11@ exit_car 
+//05E2: AS_actor 10@ kill_actor $PLAYER_ACTOR 
+//05E2: AS_actor 11@ kill_actor $PLAYER_ACTOR 
+jump @Noname_996 
+
+
+:Noname_996
+wait 0 
+if and
+   Player.WantedLevel($PLAYER_CHAR) > 1
+   not Actor.Dead($PLAYER_ACTOR)
+   0741:  not actor $PLAYER_ACTOR busted 
+jf @Noname_1154 
+if or
+00F2:   actor 10@ near_actor $PLAYER_ACTOR radius 150.0 150.0 50.0 
+00F2:   actor 11@ near_actor $PLAYER_ACTOR radius 150.0 150.0 50.0 
+jf @Noname_1154 
+if and
+   Actor.Dead(10@)
+   Actor.Dead(11@)
+jf @Noname_996 
+jump @Noname_1154
+
+:Noname_1154
+wait 0 
+Actor.RemoveReferences(10@)
+Actor.RemoveReferences(11@)
+Car.RemoveReferences(0@)
+Model.Destroy(30@)
+Model.Destroy(29@)
+Model.Destroy(#ARMY)
+0209: 30@ = random_int_in_ranges 10000 20000 
+wait 30@ 
+jump @Noname_6 
