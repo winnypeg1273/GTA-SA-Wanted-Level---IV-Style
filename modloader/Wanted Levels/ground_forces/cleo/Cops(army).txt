@@ -22,16 +22,11 @@ jf @Noname_6        */
 
 :Noname_7
 if
-    Player.WantedLevel($PLAYER_CHAR) > 3
-then
-    28@ = 31
-    29@ = #M4
-    30@ = #BARRACKS
-else
-    28@ = 22
-    29@ = #COLT45
-    30@ = #PATRIOT
-end
+    not Player.WantedLevel($PLAYER_CHAR) > 3
+jf @Noname_6
+28@ = 22
+29@ = #COLT45
+30@ = #PATRIOT
    
 
 :Noname_29 
@@ -90,10 +85,13 @@ jump @Noname_996
 :Noname_996
 wait 0 
 if and
-   Player.WantedLevel($PLAYER_CHAR) > 1
    not Actor.Dead($PLAYER_ACTOR)
    0741:  not actor $PLAYER_ACTOR busted 
 jf @Noname_1154 
+if and
+    Player.WantedLevel($PLAYER_CHAR) > 1
+    not Player.WantedLevel($PLAYER_CHAR) > 3
+jf @Noname_1154
 if or
 00F2:   actor 10@ near_actor $PLAYER_ACTOR radius 150.0 150.0 50.0 
 00F2:   actor 11@ near_actor $PLAYER_ACTOR radius 150.0 150.0 50.0 

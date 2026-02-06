@@ -21,7 +21,7 @@ while true
     Player.Defined($PLAYER_CHAR)
     jf  continue
     
-    $ONMISSION == 0
+    $CURRENT_TOURNAMENT == 0
     jf continue
     
     //Is player wanted?
@@ -145,6 +145,7 @@ while true
         //Is player had four stars?
         if and
             0039:   COND == 1
+            Player.Defined($PLAYER_CHAR)
             not Player.WantedLevel($PLAYER_CHAR) > 0
         then
             COND = 0

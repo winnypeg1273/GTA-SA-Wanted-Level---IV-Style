@@ -15,7 +15,7 @@ jf @Noname_2
 wait 0
 0@ = Player.WantedLevel($PLAYER_CHAR)
 if
-   0@ < 2
+   0@ < 3
 jf @Noname_2
 
 :aimcop_32

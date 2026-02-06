@@ -35,7 +35,9 @@ jf @POLICESPIKES_1
 15@ = #SFPD1 
 
 :POLICESPIKES_7
-IF 
+06AC: 20@ = actor $PLAYER_ACTOR movement_speed
+IF OR
+   20@ > 20.0 
    Actor.Driving($PLAYER_ACTOR)
 jf @POLICESPIKES_1
 if or
@@ -101,7 +103,7 @@ Object.Create(10@, 2892, 17@, 18@, 19@)
 0400: store_coords_to 4@ 5@ 6@ from_object 10@ with_offset 0.0 -5.0 0.0
 Actor.PutAt(14@, 4@, 5@, 6@)
 0350: set_actor 14@ maintain_position_when_attacked 1 
-07DD: set_actor 14@ attack_rate 70 // previously known as temper_to
+07DD: set_actor 14@ attack_rate 60 // previously known as temper_to
 099F: AS_actor 14@ ignore_weapon_range 1
 //06E4: AS_actor 14@ attempt_to_bust_actor $PLAYER_ACTOR
 05E2: AS_actor 14@ kill_actor $PLAYER_ACTOR 

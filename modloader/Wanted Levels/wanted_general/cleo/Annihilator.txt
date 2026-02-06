@@ -84,7 +84,6 @@ Actor.CreateAsDriver(4@(28@,2i), PedType.Cop, #SWAT, 10@(28@,2i))
 
 :Noname_56
 02A9: set_actor 13@(30@,4i) immune_to_nonplayer 1
-07DD: set_actor 13@(30@,4i) temper_to 70 
 077A: set_actor 13@(30@,4i) acquaintance 4 to_actors_pedtype 0 
 099F: AS_actor 13@(30@,4i) ignore_weapon_range 1
 05E2: AS_actor 13@(30@,4i) kill_actor $PLAYER_ACTOR 
@@ -95,8 +94,10 @@ if
     Player.WantedLevel($PLAYER_CHAR) > 5
 then
     02E2: set_actor 13@(30@,4i) weapon_accuracy_to 75
+    07DD: set_actor 13@(30@,4i) temper_to 90
 else
-    02E2: set_actor 13@(30@,4i) weapon_accuracy_to 5
+    02E2: set_actor 13@(30@,4i) weapon_accuracy_to 50
+    07DD: set_actor 13@(30@,4i) temper_to 80
 end
 
 if or                                    
