@@ -1,0 +1,23 @@
+{$CLEO .cs}
+{$USE CLEO+}
+0000:
+
+:Noname_16
+wait 0
+if and
+    Player.Defined($PLAYER_CHAR)
+    not Player.WantedLevel($PLAYER_CHAR) > 2
+jf @Noname_16
+0A8D: 10@ = read_memory 0xB7CD98 size 4 virtual_protect                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          0
+10@ += 0x480
+0A8D: 10@ = read_memory 10@ size 4 virtual_protect 0
+0A8D: 10@ = read_memory 10@ size 4 virtual_protect 0
+
+0085: 25@ = 10@
+000A: 25@ += 0x14
+0A8D: 25@ = read_memory 25@ size 4 virtual_protect 0
+0092: 25@ = float 25@ to_integer
+
+
+0513: show_text_box_1number 'SLOT_02' number 25@  
+jump @Noname_16

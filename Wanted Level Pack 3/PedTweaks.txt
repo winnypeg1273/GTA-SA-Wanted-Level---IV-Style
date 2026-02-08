@@ -1,0 +1,321 @@
+{$CLEO .cs}
+{$USE ini}
+thread 'PTWEAKS'
+
+:START
+wait 0
+gosub @LOAD_LS
+gosub @LOAD_SF
+gosub @LOAD_LV
+//gosub @LOAD_CS
+gosub @LOAD_DS
+gosub @LOAD_CUSTOM
+gosub @ASM
+jump @START
+
+:LOAD_LS
+wait 0
+if or
+   not Model.Available(#LAPD1)
+   not Model.Available(#LAPDM1)
+else_jump @RETURN
+Model.Load(#LAPD1)
+Model.Load(#LAPDM1)
+038B: load_requested_models
+jump @LOAD_LS
+
+:LOAD_SF
+wait 0
+if or
+   not Model.Available(#SFPD1)
+   not Model.Available(#COLT45)
+   not Model.Available(#NITESTICK)
+   not Model.Available(#LAPDM1)
+else_jump @RETURN
+Model.Load(#SFPD1)
+Model.Load(#COLT45)
+Model.Load(#NITESTICK)
+Model.Load(#LAPDM1)
+038B: load_requested_models
+jump @LOAD_SF
+
+:LOAD_LV
+wait 0
+if or
+   not Model.Available(#LVPD1)
+   not Model.Available(#LAPDM1)
+else_jump @RETURN
+Model.Load(#LVPD1)
+Model.Load(#LAPDM1)
+038B: load_requested_models
+jump @LOAD_LV
+
+:LOAD_CS
+wait 0
+if or
+   not Model.Available(#CSHER)
+   not Model.Available(#CSHER)
+else_jump @RETURN
+Model.Load(#CSHER)
+Model.Load(#CSHER)
+038B: load_requested_models
+jump @LOAD_CS
+
+:LOAD_DS
+wait 0
+if or
+   not Model.Available(#DSHER)
+   not Model.Available(#ARMY)
+   not Model.Available(#M4)
+else_jump @RETURN
+Model.Load(#DSHER)
+Model.Load(#ARMY)
+Model.Load(#M4)
+038B: load_requested_models
+jump @LOAD_DS
+
+:LOAD_DDEPUT
+wait 0
+if
+   not Model.Available(#DSHER)
+else_jump @RETURN
+Model.Load(#DSHER)
+038B: load_requested_models
+jump @LOAD_DDEPUT
+
+:LOAD_CUSTOM
+wait 0
+if
+0AAB:   file_exists "CLEO\PedTweaks.ini"
+else_jump @RETURN
+0AF0: 1@ = read_int_from_ini_file "CLEO\PedTweaks.ini" section "LSCOPS" key "OFFICER"
+0AF0: 2@ = read_int_from_ini_file "CLEO\PedTweaks.ini" section "LSCOPS" key "COPBIKER"
+0AF0: 3@ = read_int_from_ini_file "CLEO\PedTweaks.ini" section "SFCOPS" key "OFFICER"
+0AF0: 4@ = read_int_from_ini_file "CLEO\PedTweaks.ini" section "SFCOPS" key "COPBIKER"
+0AF0: 5@ = read_int_from_ini_file "CLEO\PedTweaks.ini" section "LVCOPS" key "OFFICER"
+0AF0: 6@ = read_int_from_ini_file "CLEO\PedTweaks.ini" section "LVCOPS" key "COPBIKER"
+if or
+   not Model.Available(1@)
+   not Model.Available(2@)
+   not Model.Available(3@)
+   not Model.Available(4@)
+   not Model.Available(5@)
+   not Model.Available(6@)
+else_jump @RETURN
+Model.Load(1@)
+Model.Load(2@)
+Model.Load(3@)
+Model.Load(4@)
+Model.Load(5@)
+Model.Load(6@)
+038B: load_requested_models
+jump @LOAD_CUSTOM
+
+:ASM
+wait 0
+077E: get_active_interior_to $ACTIVE_INTERIOR
+if
+   $ACTIVE_INTERIOR == 0
+else_jump @RETURN
+0A8D: 0@ = read_memory 0xC87AB9 size 1 virtual_protect 0 
+if 
+   not 0@ == 16
+else_jump @ASM_6
+0A8C: write_memory 0x5DDCCD size 1 value 22 virtual_protect 1
+0A8C: write_memory 0x68BBB7 size 1 value 22 virtual_protect 1
+0A8C: write_memory 0x5DDCBF size 1 value 3 virtual_protect 0
+
+:ASM_1
+wait 0
+if
+0154:   actor $PLAYER_ACTOR in_zone 'LA'
+else_jump @ASM_2
+gosub @LS_MAIN
+wait 100
+gosub @LS_CUSTOM
+wait 100
+return
+
+:LS_MAIN
+wait 0
+0A8D: 0@ = read_memory 0x5DDD86 size 2 virtual_protect 1
+if
+   not 0@ == #LAPDM1
+else_jump @LS_MAIN2
+0A8C: write_memory 0x5DDD86 size 2 value #LAPDM1 virtual_protect 1
+
+:LS_MAIN2
+wait 0
+0A8D: 0@ = read_memory 0x8A5AA4 size 4 virtual_protect 0
+if
+   not 0@ == #LAPD1
+else_jump @RETURN
+0A8C: write_memory 0x8A5AA4 size 4 value #LAPD1 virtual_protect 0
+return
+
+:LS_CUSTOM
+wait 0
+if and
+   not 1@ == 0
+   not 2@ == 0
+0AAB:   file_exists "CLEO\PedTweaks.ini"
+else_jump @RETURN
+0A8C: write_memory 0x8A5AA4 size 4 value 1@ virtual_protect 0
+0A8C: write_memory 0x5DDD86 size 2 value 2@ virtual_protect 1
+return
+
+:ASM_2
+wait 0
+if
+0154:   actor $PLAYER_ACTOR in_zone 'SF'
+else_jump @ASM_3
+gosub @SF_MAIN
+wait 100
+gosub @SF_CUSTOM
+wait 100
+return
+
+:SF_MAIN
+wait 0
+0A8D: 0@ = read_memory 0x5DDD86 size 2 virtual_protect 1
+if
+   not 0@ == #LAPDM1
+else_jump @SF_MAIN2
+0A8C: write_memory 0x5DDD86 size 2 value #LAPDM1 virtual_protect 1
+
+:SF_MAIN2
+wait 0
+0A8D: 0@ = read_memory 0x8A5AA8 size 4 virtual_protect 0
+if
+   not 0@ == #SFPD1
+else_jump @RETURN
+0A8C: write_memory 0x8A5AA8 size 4 value #SFPD1 virtual_protect 0
+return
+
+:SF_CUSTOM
+wait 0
+if and
+   not 3@ == 0
+   not 4@ == 0
+0AAB:   file_exists "CLEO\PedTweaks.ini"
+else_jump @RETURN
+0A8C: write_memory 0x8A5AA8 size 4 value 3@ virtual_protect 0
+0A8C: write_memory 0x5DDD86 size 2 value 4@ virtual_protect 1
+return 
+
+:ASM_3
+wait 0
+if
+0154:   actor $PLAYER_ACTOR in_zone 'VE'
+else_jump @ASM_4
+gosub @LV_MAIN
+wait 100
+gosub @LV_CUSTOM
+wait 100
+return
+
+:LV_MAIN
+wait 0
+0A8D: 0@ = read_memory 0x5DDD86 size 2 virtual_protect 1
+if
+   not 0@ == #LAPDM1
+else_jump @LV_MAIN2
+0A8C: write_memory 0x5DDD86 size 2 value #LAPDM1 virtual_protect 1
+
+:LV_MAIN2
+wait 0
+0A8D: 0@ = read_memory 0x8A5AAC size 4 virtual_protect 0
+if
+   not 0@ == #LVPD1
+else_jump @RETURN
+0A8C: write_memory 0x8A5AAC size 4 value #LVPD1 virtual_protect 0
+return
+
+:LV_CUSTOM
+wait 0
+if and
+   not 5@ == 0
+   not 6@ == 0
+0AAB:   file_exists "CLEO\PedTweaks.ini"
+else_jump @RETURN
+0A8C: write_memory 0x8A5AAC size 4 value 5@ virtual_protect 0
+0A8C: write_memory 0x5DDD86 size 2 value 6@ virtual_protect 1
+return
+
+:ASM_4
+//  Disabled
+jump @ASM_4FIXED
+wait 0
+if or
+0154:   actor $PLAYER_ACTOR in_zone 'RED'
+0154:   actor $PLAYER_ACTOR in_zone 'FLINTC'
+0154:   actor $PLAYER_ACTOR in_zone 'WHET'
+else_jump @ASM_5
+0A8C: write_memory 0x8A5AA0 size 2 value #CSHER virtual_protect 0
+wait 300
+0A8C: write_memory 0x8A5AA0 size 2 value #CSHER virtual_protect 0
+wait 200
+return
+
+:ASM_4PATCH
+0ABC: write_memory 0x8A5AA0 size 2 value #CSHER virtual_protect 1
+
+:ASM_4FIXED
+wait 0
+if or
+0154:   actor $PLAYER_ACTOR in_zone 'RED'
+0154:   actor $PLAYER_ACTOR in_zone 'FLINTC'
+0154:   actor $PLAYER_ACTOR in_zone 'WHET'
+else_jump @ASM_5
+0A8D: 0@ = read_memory 0x8A5AA0 size 2 virtual_protect 0
+if and
+   not 0@ == #CSHER
+   not 0@ == #CSHER
+else_jump @RETURN
+0A8C: write_memory 0x8A5AA0 size 2 value #CSHER virtual_protect 0
+return
+
+:ASM_5
+wait 0
+if or
+0154:   actor $PLAYER_ACTOR in_zone 'ROBAD'
+0154:   actor $PLAYER_ACTOR in_zone 'ROBAD1'
+0154:   actor $PLAYER_ACTOR in_zone 'BONE'
+else_jump @RETURN
+0A8D: 0@ = read_memory 0x8A5AA0 size 2 virtual_protect 0
+if
+   not 0@ == #DSHER
+else_jump @RETURN
+0A8C: write_memory 0x8A5AA0 size 2 value #DSHER virtual_protect 0
+//  Disabled
+return
+if
+0AAB:   file_exists "CLEO\PedTweaks.ini"
+else_jump @RETURN
+0AF0: 7@ = read_int_from_ini_file "CLEO\PedTweaks.ini" section "LVCOPS" key "DESERTDEPUT"
+if
+   7@ == 1
+else_jump @RETURN
+wait 300
+gosub @LOAD_DDEPUT
+0A8C: write_memory 0x8A5AA0 size 2 value #DSHER virtual_protect 0
+wait 200
+return
+
+:ASM_6
+wait 0
+if
+0AAB:   file_exists "CLEO\PedTweaks.ini"
+else_jump @RETURN
+0AF0: 8@ = read_int_from_ini_file "CLEO\PedTweaks.ini" section "MISC" key "SOLDIERS"
+if
+   8@ == 1
+else_jump @RETURN
+0A8C: write_memory 0x8A5AA0 size 2 value #ARMY virtual_protect 0
+0A8C: write_memory 0x8A5AA8 size 4 value #ARMY virtual_protect 0
+0A8C: write_memory 0x5DDCBF size 1 value 31 virtual_protect 0  
+0A8C: write_memory 0x68BBB7 size 1 value 31 virtual_protect 1
+0A8C: write_memory 0x5DDCCD size 1 value 0 virtual_protect 1
+
+:RETURN
+return
