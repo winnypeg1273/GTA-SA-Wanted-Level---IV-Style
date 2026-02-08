@@ -23,12 +23,12 @@ jump @LOAD
 if or
    not Model.Available(#ARMY)
    not Model.Available(#SFPD1)
-   not Model.Available(#DSHER)
+   //not Model.Available(#CSHER)
    not Model.Available(#M4)
 jf @RETURN   
 Model.Load(#ARMY)
 Model.Load(#SFPD1)
-Model.Load(#DSHER)
+//Model.Load(#CSHER)
 Model.Load(#M4)
 038B: load_requested_models
 jump @LOAD_COPS
@@ -51,7 +51,7 @@ jf @ASM_6
 wait 0
 if
     $CURRENT_TOWN_NUMBER == 2
-jf @ASM_4
+jf @ASM_5
 0A8D: 0@ = read_memory 0x8A5AA8 size 4 virtual_protect 0
 if
    not 0@ == #SFPD1
@@ -59,32 +59,16 @@ jf @RETURN
 0A8C: write_memory 0x8A5AA8 size 4 value #SFPD1 virtual_protect 0
 return
 
-:ASM_4
+:ASM_5
 wait 0
-if or
-    Player.InZone($PLAYER_CHAR, 'RED')
-    Player.InZone($PLAYER_CHAR, 'FLINTC')
-    Player.InZone($PLAYER_CHAR, 'WHET')
-jf @ASM_5
+if
+    $CURRENT_TOWN_NUMBER == 0
+jf @RETURN
 0A8D: 0@ = read_memory 0x8A5AA0 size 2 virtual_protect 0
 if
    not 0@ == #CSHER
 jf @RETURN
 0A8C: write_memory 0x8A5AA0 size 2 value #CSHER virtual_protect 0
-return
-
-:ASM_5
-wait 0
-if or
-    Player.InZone($PLAYER_CHAR, 'BONE')
-    Player.InZone($PLAYER_CHAR, 'ROBAD')
-    Player.InZone($PLAYER_CHAR, 'ROBAD1')
-jf @RETURN
-0A8D: 0@ = read_memory 0x8A5AA0 size 2 virtual_protect 0
-if
-   not 0@ == #DSHER
-jf @RETURN
-0A8C: write_memory 0x8A5AA0 size 2 value #DSHER virtual_protect 0
 return
 
 
@@ -97,5 +81,4 @@ wait 0
 0A8C: write_memory 0x5DDCCD size 1 value 0 virtual_protect 1
 
 :RETURN
-
 return
