@@ -26,6 +26,9 @@ wait 0
 if 
 get_random_char_in_sphere_no_save_recursive 1@ 0.0 0.0 0.0 10000.0 0 1 
 jf @NONAME_518 
+if
+    056D:   actor 1@ defined
+jf @NONAME_518
 
 :NONAME_108
 if or
@@ -47,11 +50,11 @@ then
     02AB: set_actor 1@ immunities BP 0 FP 0 EP 0 CP 1 MP 0
 end   
 if and 
-   2@ < 7.5           
+   2@ < 7.5         
    Player.WantedLevel($PLAYER_CHAR) > 5
 jf @NONAME_243 
 if and
-   044B:  actor 1@ on_foot
+   not Actor.Driving(1@)
    02D8:   actor 1@ current_weapon == 28
 jf @NONAME_243
 048F: actor 1@ remove_weapons 
@@ -67,7 +70,7 @@ if and
    Player.WantedLevel($PLAYER_CHAR) > 5
 jf @NONAME_422 
 if and 
-    044B:  actor 1@ on_foot
+    not Actor.Driving(1@)
     02D8:   actor 1@ current_weapon == 29 
 jf @NONAME_324 
 048F: actor 1@ remove_weapons 

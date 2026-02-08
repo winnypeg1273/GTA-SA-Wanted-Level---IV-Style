@@ -2,14 +2,13 @@
 {$CLEO .cs}
 {$USE ini}
 
-//-------------MAIN---------------
 0000: NOP 
 03A4: script_name 'SNIPER'
 
 :SNIPER_2
 wait 0 
 if
-    0AAB:   does_file_exist "cleo\SniperLS.ini"
+    0AAB:   does_file_exist "cleo\cop_sniper.ini"
 jf @SNIPER_2
 if and
    Player.Defined($PLAYER_CHAR)
@@ -23,7 +22,7 @@ jf @SNIPER_2
 :SNIPER_103
 0001: wait 250 ms 
 26@ = 1
-0AF0: 5@ = read_int_from_ini_file "cleo\SniperLS.ini" section "SNIPER" key "N"
+0AF0: 5@ = read_int_from_ini_file "cleo\cop_sniper.ini" section "SNIPER" key "N"
 if
     5@ > 0
 jf @SNIPER_2  
@@ -32,10 +31,11 @@ jf @SNIPER_2
 wait 100
 0AD3: 28@s = string_format "sniper%i" 26@
 if and
-0AF2: 2@ = read_float_from_ini_file "cleo\SniperLS.ini" section 28@s key "x"
-0AF2: 3@ = read_float_from_ini_file "cleo\SniperLS.ini" section 28@s key "y"
-0AF2: 4@ = read_float_from_ini_file "cleo\SniperLS.ini" section 28@s key "z"
+0AF2: 2@ = read_float_from_ini_file "cleo\cop_sniper.ini" section 28@s key "x"
+0AF2: 3@ = read_float_from_ini_file "cleo\cop_sniper.ini" section 28@s key "y"
+0AF2: 4@ = read_float_from_ini_file "cleo\cop_sniper.ini" section 28@s key "z"
 jf @SNIPER_END
+//0513: show_text_box_1number 'SLOT_02' number 26@ 
 if
   00FE:  actor $PLAYER_ACTOR sphere 0 in_sphere 2@ 3@ 4@ radius 50.0 50.0 100.0 
 jf @SNIPER_END 

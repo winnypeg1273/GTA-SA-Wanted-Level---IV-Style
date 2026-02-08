@@ -21,8 +21,8 @@ while true
     Player.Defined($PLAYER_CHAR)
     jf  continue
     
-    $CURRENT_TOURNAMENT == 0
-    jf continue
+    //$ONMISSION == 0
+    //jf continue
     
     //Is player wanted?
     if 
@@ -143,39 +143,43 @@ while true
         end
     else
         //Is player had four stars?
-        if and
+        if
             0039:   COND == 1
-            Player.Defined($PLAYER_CHAR)
-            not Player.WantedLevel($PLAYER_CHAR) > 0
         then
-            COND = 0
-            0A8D: 29@ = read_memory 0xB74490 size 4 virtual_protect 0
-            000A: 29@ += 0x4
-            0A8D: 29@ = read_memory 29@ size 4 virtual_protect 0
-            for 30@ = 0 to 35584 step 0x100
-                0A8D: COP = read_memory 29@ size 1 virtual_protect 0
-                000A: 29@ += 0x1
-                if and
-                    0029:  COP >= 0x00 
-                    001B:  0x80 > COP
-                then
-                    005A: COP += 30@
-                    089F: get_actor COP pedtype_to PED_TYPE
+            if or
+                Actor.Dead($PLAYER_ACTOR)
+                0741:   actor $PLAYER_ACTOR busted
+                not Player.WantedLevel($PLAYER_CHAR) > 0
+            then
+                COND = 0
+                0A8D: 29@ = read_memory 0xB74490 size 4 virtual_protect 0
+                000A: 29@ += 0x4
+                0A8D: 29@ = read_memory 29@ size 4 virtual_protect 0
+                for 30@ = 0 to 35584 step 0x100
+                    0A8D: COP = read_memory 29@ size 1 virtual_protect 0
+                    000A: 29@ += 0x1
                     if and
-                        8118:   not actor COP dead
-                        PED_TYPE == 6 
-                        0449:   actor COP in_a_car
+                        0029:  COP >= 0x00 
+                        001B:  0x80 > COP
                     then
-                        0811: CPOLICE = actor COP used_car
-                        046C: USER_C = car CPOLICE driver
-                        MODEL_C = Car.Model(CPOLICE)
+                        005A: COP += 30@
+                        089F: get_actor COP pedtype_to PED_TYPE
                         if and
-                            0A01:   model MODEL_C car
-                            803B:   not USER_C == COP
-                        then    0687: clear_actor COP task
+                            8118:   not actor COP dead
+                            PED_TYPE == 6 
+                            0449:   actor COP in_a_car
+                        then
+                            0811: CPOLICE = actor COP used_car
+                            046C: USER_C = car CPOLICE driver
+                            MODEL_C = Car.Model(CPOLICE)
+                            if and
+                                0A01:   model MODEL_C car
+                                803B:   not USER_C == COP
+                            then    0687: clear_actor COP task
+                            end
                         end
                     end
-                end
+                end    
             end
         end
     end

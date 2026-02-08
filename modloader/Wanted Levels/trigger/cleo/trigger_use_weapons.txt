@@ -3,20 +3,46 @@
 0000:
 03A4: script_name 'AIM'
 
-:Noname_2
+:weapons_2
 wait 0 
-if and
+if
    Player.Defined($PLAYER_CHAR)
-   not Actor.Driving($PLAYER_ACTOR)
-   $ACTIVE_INTERIOR == 0
-jf @Noname_2 
+jf @weapons_2 
 
-:Noname_32
+:weapons_32
 wait 0
 0@ = Player.WantedLevel($PLAYER_CHAR)
 if
    0@ < 3
-jf @Noname_2
+jf @weapons_2
+
+:vehicle_01
+if
+    Actor.Driving($PLAYER_ACTOR)
+jf @aimcop_32 
+if or
+    00E1:   player 0 pressed_key 17
+    00E1:   player 0 pressed_key 4
+jf @vehicle_02
+if or
+    Actor.DrivingVehicleType($PLAYER_ACTOR, #HYDRA)
+    Actor.DrivingVehicleType($PLAYER_ACTOR, #RHINO)
+    Actor.DrivingVehicleType($PLAYER_ACTOR, #HUNTER) 
+jf @vehicle_03   
+jump @shooting_33
+
+:vehicle_02
+if
+    Actor.DrivingVehicleType($PLAYER_ACTOR, #COMBINE)
+jf @weapons_2
+jump @shooting_33
+
+:vehicle_03
+0E8B: get_char_weapon_state $PLAYER_ACTOR store_to 20@
+if 20@ == 1
+jf @weapons_2
+jump @shooting_33     
+    
 
 :aimcop_32
 0470: 12@ = actor $PLAYER_ACTOR current_weapon
@@ -31,34 +57,33 @@ jump @aimcop_48
 /*if and
     $ONMISSION == 0
     not Player.WantedLevel($PLAYER_CHAR) > 2
-jf @Noname_2 */
+jf @weapons_2 */
 0470: 12@ = actor $PLAYER_ACTOR current_weapon
+0782: get_weapon_with_ID 12@ weapon_group_to 13@
 if or
-    12@ == 16
-    12@ == 18
-jf @heavy_fire_02
-jump @heavy_fire_33   
+    12@ == 9
+    12@ == 40
+    //13@ == 9
+    13@ == 8
+    13@ == 7
+    13@ == 6
+jf @weapons_2
+jump @shooting_33   
 
-:heavy_fire_02
-if and
-    12@ > 34
-    12@ < 41
-jf @Noname_32
-jump @heavy_fire_33 
                       
 :aimcop_48
 wait 0
 if
 00E1:   player 0 pressed_key 6
-jf @Noname_32
+jf @weapons_32
 get_char_player_is_targeting 11@ $PLAYER_CHAR
 if 
    not 11@ == -1 
-jf @Noname_32 
+jf @weapons_32 
 089F: get_actor 11@ pedtype_to 9@
 if
   9@ == 6
-jf @aimcop_70
+jf @aimcop_71
 
 :aimcop_69
 if and
@@ -67,19 +92,6 @@ if and
 jf @aimcop_77
 Player.SetMinWantedLevel(0,3)
 jump @aimcop_77
-
-:aimcop_70
-if and
-    $ONMISSION==0
-    not 9@ == 24
-    Actor.Model(11@)==#COPGRL3
-jf @aimcop_71
-if and
-    Actor.Dead(11@)
-    051A: actor 11@ damaged_by_actor $PLAYER_ACTOR
-jf @aimcop_77
-Player.SetMinWantedLevel(0,4)
-jump @aimcop_77 
 
 :aimcop_71
 if or
@@ -100,11 +112,11 @@ if or
   9@ == 20
   9@ == 23
 jf @aimcop_77  
-0470: 13@ = actor 11@ current_weapon
+0470: 14@ = actor 11@ current_weapon
 //0E44: get_char_kill_target_char 11@ store_to 12@
 if or
-    13@ > 42
-    13@ < 16
+    14@ > 42
+    14@ < 16
     //07D6: not 12@ == $PLAYER_ACTOR  // int
 jf @aimcop_77
 12@ = 0
@@ -113,7 +125,7 @@ jf @aimcop_77
 0EA5: get_closest_cop_near_char $PLAYER_ACTOR radius 20.0 alive 1 in_car 1 on_foot 1 seen_in_front 1 store_to 7@
 if 
    not 7@ == -1 
-jf @Noname_32 
+jf @weapons_32 
 if
    0364:   actor 7@ spotted_actor $PLAYER_ACTOR
 jf @aimcop_48  
@@ -131,31 +143,48 @@ Player.SetMinWantedLevel(0,1)
 
 
 :aimped_77
-11@ = 0
-7@ = 0
-jump @aimcop_48    
+7@ = 0   
 
 :aimcop_77
 11@ = 0
 jump @aimcop_48
 
-:heavy_fire_33
+:shooting_33
 wait 0
-0EA5: get_closest_cop_near_char $PLAYER_ACTOR radius 20.0 alive 1 in_car 1 on_foot 1 seen_in_front 0 store_to 7@
+0EA5: get_closest_cop_near_char $PLAYER_ACTOR radius 40.0 alive 0 in_car 1 on_foot 1 seen_in_front 0 store_to 7@
 if 
    not 7@ == -1 
 jf @heavy_fire_01
 089F: get_actor 7@ pedtype_to 9@ 
 if
    9@ == 6
-jf @heavy_fire_87
+jf @shooting_87
 if and
-   0364:   actor 7@ spotted_actor $PLAYER_ACTOR
-   02E0:   actor $PLAYER_ACTOR firing_weapon
-jf @heavy_fire_87
-Player.SetMinWantedLevel(0,2)
-jump @heavy_fire_87 
+    051A:  actor 7@ damaged_by_actor $PLAYER_ACTOR
+    Actor.Dead(7@)
+jf @heavy_fire_34
+0ECE: get_time_char_is_dead 7@ store_to 15@
+if
+    15@ < 1500
+jf @shooting_87
+Player.SetMinWantedLevel(0,3)
+jump @shooting_87
 
-:heavy_fire_87
+:heavy_fire_34
+if or
+    02D8:  actor $PLAYER_ACTOR current_weapon == 40
+    02D8:  actor $PLAYER_ACTOR current_weapon == 34
+jf @heavy_fire_35
+jump @shooting_87
+
+:heavy_fire_35
+if and
+   0104:   actor $PLAYER_ACTOR near_actor 7@ radius 18.0 18.0 15.0 sphere 0 
+   02E0:   actor $PLAYER_ACTOR firing_weapon
+jf @shooting_87
+Player.SetMinWantedLevel(0,2)
+jump @shooting_87 
+
+:shooting_87
 7@ = 0
 jump @heavy_fire_01
