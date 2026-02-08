@@ -97,4 +97,5 @@ wait 0
 0A8C: write_memory 0x5DDCCD size 1 value 0 virtual_protect 1
 
 :RETURN
+
 return
