@@ -1,0 +1,93 @@
+// This file was decompiled using SASCM.ini published by GTAG (http://gtag.gtagaming.com/opcode-database) on 14.6.2013
+{$CLEO .cs}
+{$USE ini}
+
+0000: NOP 
+03A4: script_name 'SNIPER'
+
+:SNIPER_2
+wait 0 
+if
+    0AAB:   does_file_exist "cleo\cop_sniper.ini"
+jf @SNIPER_2
+if and
+   Player.Defined($PLAYER_CHAR)
+   Player.WantedLevel($PLAYER_CHAR) > 4
+jf @SNIPER_2
+if and
+  $ONMISSION == 0 
+  $ACTIVE_INTERIOR == 0 
+jf @SNIPER_2
+
+:SNIPER_103
+0001: wait 250 ms 
+26@ = 1
+0AF0: 5@ = read_int_from_ini_file "cleo\cop_sniper.ini" section "SNIPER" key "N"
+if
+    5@ > 0
+jf @SNIPER_2  
+
+:SNIPER_104
+wait 100
+0AD3: 28@s = string_format "sniper%i" 26@
+if and
+0AF2: 2@ = read_float_from_ini_file "cleo\cop_sniper.ini" section 28@s key "x"
+0AF2: 3@ = read_float_from_ini_file "cleo\cop_sniper.ini" section 28@s key "y"
+0AF2: 4@ = read_float_from_ini_file "cleo\cop_sniper.ini" section 28@s key "z"
+jf @SNIPER_END
+//0513: show_text_box_1number 'SLOT_02' number 26@ 
+if
+  00FE:  actor $PLAYER_ACTOR sphere 0 in_sphere 2@ 3@ 4@ radius 50.0 50.0 100.0 
+jf @SNIPER_END 
+jump @SNIPER_146
+
+:SNIPER_146
+wait 0 
+Model.Load(#SWAT)
+Model.Load(#SNIPER)
+038B: load_requested_models 
+wait 0
+jump @SNIPER_147 
+
+:SNIPER_147
+wait 0 
+1@ = Actor.Create(Mission1, #SWAT, 2@, 3@, 4@)
+Actor.Angle(1@) = 77.0
+Actor.GiveWeaponAndAmmo(1@, SNIPERRIFLE, 1000)
+Actor.Health(1@) = 250
+02AB: set_actor 1@ immunities BP 0 FP 0 EP 0 CP 1 MP 0
+07DD: set_actor 1@ attack_rate 70 // previously known as temper_to 
+077A: set_actor 1@ acquaintance 4 to_actors_pedtype 0 // see ped.dat 
+085B: AS_actor 1@ set_kinda_stay_in_same_place 1
+0350: set_actor 1@ maintain_position_when_attacked 1 
+Actor.WeaponAccuracy(1@) = 90
+Model.Destroy(#SWAT)
+Model.Destroy(#SNIPER)
+
+:SNIPER_310
+wait 0 
+05E2: AS_actor 1@ kill_actor $PLAYER_ACTOR 
+jump @SNIPER_336 
+
+:SNIPER_336
+wait 100
+if
+    00FE:  actor $PLAYER_ACTOR sphere 0 in_sphere 2@ 3@ 4@ radius 75.0 75.0 110.0
+jf @SNIPER_337
+if or
+    not $ONMISSION == 0
+    not Player.WantedLevel($PLAYER_CHAR) > 2
+    not Player.Defined($PLAYER_CHAR)
+jf @SNIPER_336
+
+:SNIPER_337
+Actor.RemoveReferences(1@)
+wait 0 
+jump @SNIPER_END 
+
+:SNIPER_END
+26@ += 1
+if 
+   001D: 26@ > 5@  //int       
+jf @SNIPER_104   
+jump @SNIPER_2

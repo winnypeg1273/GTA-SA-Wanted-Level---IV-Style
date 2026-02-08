@@ -1,0 +1,186 @@
+{$CLEO .cs}
+thread 'COPDRBY'
+
+//Don't use 30@ and 29@
+const
+    COND = 0@
+    COP = 1@
+    PED_TYPE = 2@
+    CPOLICE = 3@
+    MODEL_C = 4@
+    CWEAP = 5@
+    CAMMU = 6@
+    USER_C = 7@
+    NUMBERSFOR = 10@
+end
+
+COND = 0
+while true
+    wait 2500
+    
+    Player.Defined($PLAYER_CHAR)
+    jf  continue
+    
+    //$ONMISSION == 0
+    //jf continue
+    
+    //Is player wanted?
+    if 
+        Player.WantedLevel($PLAYER_CHAR) > 4
+    then
+    
+        0247: load_model #MICRO_UZI
+        0247: load_model #MP5LNG
+        0247: load_model #M4
+        0247: load_model #COLT45
+        038B: load_requested_models 
+        
+        COND = 1
+        0209: 17@ = random_int_in_ranges 1 5
+        0A8D: 29@ = read_memory 0xB74490 size 4 virtual_protect 0
+        000A: 29@ += 0x4
+        0A8D: 29@ = read_memory 29@ size 4 virtual_protect 0
+        for 30@ = 0 to 35584 step 0x100
+            0A8D: COP = read_memory 29@ size 1 virtual_protect 0
+            000A: 29@ += 0x1
+            if and
+                0029:  COP >= 0x00 
+                001B:  0x80 > COP
+            then
+                005A: COP += 30@
+                //Is he exists?
+                if or
+                    not COP > 0
+                    856D:   actor COP defined 
+                then continue
+                end                                
+                //Is he dead?
+                if 0118: actor COP dead
+                then continue
+                end
+                //Is he a cop?
+                089F: get_actor COP pedtype_to PED_TYPE
+                if  PED_TYPE <> 6
+                then  continue
+                end
+                //Is he in a vehicle?
+                if  8449:  not actor COP in_a_car
+                then  continue
+                end                
+                //Does his vehicle exists?
+                0811: CPOLICE = actor COP used_car
+                if 856E:   car CPOLICE defined 
+                then continue
+                end
+                //IS his vehicle a car?
+                MODEL_C = Car.Model(CPOLICE)
+                if 8A01:  not model MODEL_C car 
+                then continue
+                end                
+                //Is he driving that car?
+                046C: USER_C = car CPOLICE driver
+                if 003B:  USER_C == COP
+                then continue
+                end                                  
+                //Check passengers
+                For NUMBERSFOR = 0 to 2
+                    0432: USER_C = get_actor_handle_from_car CPOLICE passenger_seat NUMBERSFOR
+                    if and
+                        USER_C > 0
+                        056D:   actor USER_C defined
+                    then    
+                        if  8118:   not actor USER_C dead
+                        then    break
+                        end
+                    end
+                end
+                //Check if he's the passenger and if he's the same.
+                if and
+                    USER_C > 0
+                    056D:   actor USER_C defined
+                then                        
+                    if    003B:   USER_C == COP // (int) 
+                    then
+                        //Check if he has a weapon
+                        0470: CWEAP = actor COP current_weapon
+                        041A: CAMMU = actor COP weapon CWEAP ammo
+                        if and
+                            CWEAP > 21 
+                            not CWEAP >= 33
+                            CAMMU > 0
+                            /*17@ == 1 */                     
+                        then    0713: actor COP driveby_actor $PLAYER_ACTOR car -1 point 0.0 0.0 0.0 radius 5000.0 8 1 firing_rate 40
+                        else
+                            if  Actor.Model(COP) == #ARMY
+                            then
+                                0247: load_model #M4
+                                038B: load_requested_models 
+                                01B2: give_actor COP weapon 31 ammo 9999 // Load the weapon model before using this
+                            else
+                                if  Actor.Model(COP) == #FBI
+                                then
+                                    0247: load_model #MP5LNG
+                                    038B: load_requested_models 
+                                    01B2: give_actor COP weapon 29 ammo 9999 // Load the weapon model before using this
+                                else
+                                    if  Actor.Model(COP) == #SWAT
+                                    then
+                                        0247: load_model #MICRO_UZI
+                                        038B: load_requested_models  
+                                        01B2: give_actor COP weapon 28 ammo 9999 // Load the weapon model before using this
+
+                                    else
+                                        0247: load_model #COLT45
+                                        038B: load_requested_models                                    
+                                        01B2: give_actor COP weapon 22 ammo 9999 // Load the weapon model before using this
+                                    end
+                                end
+                            end
+                        end 
+                    end
+                end
+            end
+        end
+    else
+        //Is player had four stars?
+        if
+            0039:   COND == 1
+        then
+            if or
+                Actor.Dead($PLAYER_ACTOR)
+                0741:   actor $PLAYER_ACTOR busted
+                not Player.WantedLevel($PLAYER_CHAR) > 0
+            then
+                COND = 0
+                0A8D: 29@ = read_memory 0xB74490 size 4 virtual_protect 0
+                000A: 29@ += 0x4
+                0A8D: 29@ = read_memory 29@ size 4 virtual_protect 0
+                for 30@ = 0 to 35584 step 0x100
+                    0A8D: COP = read_memory 29@ size 1 virtual_protect 0
+                    000A: 29@ += 0x1
+                    if and
+                        0029:  COP >= 0x00 
+                        001B:  0x80 > COP
+                    then
+                        005A: COP += 30@
+                        089F: get_actor COP pedtype_to PED_TYPE
+                        if and
+                            8118:   not actor COP dead
+                            PED_TYPE == 6 
+                            0449:   actor COP in_a_car
+                        then
+                            0811: CPOLICE = actor COP used_car
+                            046C: USER_C = car CPOLICE driver
+                            MODEL_C = Car.Model(CPOLICE)
+                            if and
+                                0A01:   model MODEL_C car
+                                803B:   not USER_C == COP
+                            then    0687: clear_actor COP task
+                            end
+                        end
+                    end
+                end    
+            end
+        end
+    end
+end
