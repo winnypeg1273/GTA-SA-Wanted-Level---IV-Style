@@ -10,8 +10,8 @@ This mod will implement GTA IV's police response in GTA San Andreas
 This mod alters police response in GTA SA to be more like GTA IV:
 * 1-3 stars are basically the same with some minor changes
   * Aiming at cops will guarantee 1 star and 3 stars if the officer is killed
-  * Aiming at a civilian in sight of a cop guarantees 1 star, and 2 stars for shooting them in the sight of a cop
-  * You may get a wanted level from climbing on the top of a patrolling police car
+  * Aiming at a civilian in sight of a cop guarantees 1 star, and 2 stars for shooting and injuring them in the sight of a cop
+  * You may get a wanted level from climbing on the top of a patrolling police car, or spraying cops using a firetruck water cannon
   * At 3 stars an officer may spawn ahead and deploy his spike strip to stop your vehicle
 * 4 stars: either SWAT or the FBI will come after the player.
   * If SWAT is pursuing you and the wanted level is cleared in any way, or you are defeated by the cops, the next time you get 4 stars or more, you will instead encounter the FBI. And vice versa.
@@ -28,7 +28,8 @@ This mod alters police response in GTA SA to be more like GTA IV:
 * Inside military bases, soldier models will spawn instead of normal cops (a feature from PedTweaks by Cyclone92)
   * Around Area 69, the military will first send out Patriot jeeps after you before military trucks, and finally tanks
   * This is also the only scenario where you may encounter the military giving chase
-* Also, the unused desert sheriff model is now back in the game. There is also an option to not have this (the v3.9.4 branch)
+* Also, the unused desert sheriff model is now back in the game.
+  * There is also an option to not have this (the v3.9.4 branch)
 
 ## History
 ### Update 3.9.3
