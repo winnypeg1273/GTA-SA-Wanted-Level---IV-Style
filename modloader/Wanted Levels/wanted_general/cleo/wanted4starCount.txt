@@ -1,26 +1,11 @@
 {$CLEO .cs}
 0000:
 
-:Noname_01
-0629: change_integer_stat 82 to 0
-
-:Noname_10
+:Noname_0
 wait 0  
-if and
-    Player.Defined($PLAYER_CHAR)
-    Player.WantedLevel($PLAYER_CHAR) > 3
-jf @Noname_10
-
-:Noname_12
-0652: 1@ = integer_stat 82
-/*0513: show_text_box_1number 'SLOT_02' number 1@ */
-wait 0
 if
-    Player.WantedLevel($PLAYER_CHAR) > 0
-jf @Noname_15
-jump @Noname_12
-
-:Noname_15
+    Player.Defined($PLAYER_CHAR)
+jf @Noname_0
 0652: 1@ = integer_stat 82
 if
    1@ == 0 
@@ -29,4 +14,34 @@ then
 else
     0629: change_integer_stat 82 to 0
 end
-jump @Noname_10
+
+00BF: 2@ = current_time_hours, 3@ = current_time_minutes
+if
+    2@ < 12
+then
+    0629: change_integer_stat 83 to 1   
+else
+    0629: change_integer_stat 83 to 0 
+end
+
+:Noname_10
+wait 0  
+if
+    Player.Defined($PLAYER_CHAR)
+jf @Noname_10
+if
+    Player.WantedLevel($PLAYER_CHAR) > 3
+jf @Noname_10
+
+
+:Noname_12
+0652: 1@ = integer_stat 83
+//0513: show_text_box_1number 'SLOT_02' number 1@ 
+wait 0
+if
+    Player.Defined($PLAYER_CHAR)
+jf @Noname_0
+if
+    Player.WantedLevel($PLAYER_CHAR) > 0
+jf @Noname_0
+jump @Noname_12
