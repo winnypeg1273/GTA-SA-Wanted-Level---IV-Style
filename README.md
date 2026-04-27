@@ -8,6 +8,11 @@ This mod will implement GTA IV's police response in GTA San Andreas
 
 ## How The New Wanted Level Works
 This mod alters police response in GTA SA to be more like GTA IV:
+* You can lose the cops by leaving the search area.
+  * The search area grows as you gain wanted level
+  * If you get seen, the search area recenters at your position
+  * You will always be seen if you are flying, or inside a restricted area
+  * After you leave the search area, the cooldown period begins before you escape completely
 * 1-3 stars are basically the same with some minor changes
   * Aiming at cops will guarantee 1 star and 3 stars if the officer is killed
   * Aiming at a civilian in sight of a cop guarantees 1 star, and 2 stars for shooting and injuring them in the sight of a cop
@@ -29,7 +34,7 @@ This mod alters police response in GTA SA to be more like GTA IV:
   * Around Area 69, the military will first send out Patriot jeeps after you before military trucks, and finally tanks
   * This is also the only scenario where you may encounter the military giving chase
 * Also, the unused desert sheriff model is now back in the game.
-  * There is also an option to not have this (the v3.9.4 branch)
+  * There is also an option to not have this (in the supplementary branch)
 
 ## History
 ### Update 3.9.3
