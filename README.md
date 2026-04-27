@@ -10,8 +10,9 @@ This mod will implement GTA IV's police response in GTA San Andreas
 This mod alters police response in GTA SA to be more like GTA IV:
 * You can lose the cops by leaving the search area.
   * The search area grows as you gain wanted level
-  * If you get seen, the search area recenters at your position
+  * If you get spotted by the nearby officers, the search area recenters at your position
   * You will always be seen if you are flying, or inside a restricted area
+  * The guys on the helicopters can see you from further away
   * After you leave the search area, the cooldown period begins before you escape completely
 * 1-3 stars are basically the same with some minor changes
   * Aiming at cops will guarantee 1 star and 3 stars if the officer is killed
@@ -21,7 +22,7 @@ This mod alters police response in GTA SA to be more like GTA IV:
 * 4 stars: either SWAT or the FBI will come after the player.
   * If SWAT is pursuing you and the wanted level is cleared in any way, or you are defeated by the cops, the next time you get 4 stars or more, you will instead encounter the FBI. And vice versa.
 * 5 stars: police will drive more aggressively and begins to shoot at you from their cars (also known as drive-by)
-  * If SWAT is after you, instead of the regular police helicopter, you will encounter two attack helicopters. These are actually Raindance painted in black (to imitate GTA IV's Annihilator). SWAT members onboard will shoot at you from the air with their submachine gun.
+  * If you cause troubles quickly enough, instead of the regular police helicopter, you will encounter two attack helicopters. These are actually Raindance painted in black (to imitate GTA IV's Annihilator). SWAT members onboard will shoot at you from the air with their submachine gun.
   * In certain places, a SWAT member will spawn on top of one of the buildings with a sniper rifle.
 * 6 stars: the military won't come after you (unless of course you are near their bases). Instead you will only see either FBI or SWAT like the previous stars.
   * However, now they all use the military's M4 carbine rifles. This actually makes the game harder as the FBI/SWAT teams are much more numerous than the soldiers at 6 stars in vanilla.
