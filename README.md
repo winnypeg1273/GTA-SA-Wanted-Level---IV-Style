@@ -13,8 +13,10 @@ This mod alters police response in GTA SA to be more like GTA IV:
   * If you get spotted by the nearby officers, the search area recenters at your position
   * You will always be seen if you are flying, or inside a restricted area
   * The guys on the helicopters can see you from further away
-  * After you leave the search area, the cooldown period begins before you escape completely
-  * The wanted level won't automatically drop in urban areas
+  * Your wanted level won't automatically drop in urban areas
+  * After you leave the search area, the cooldown period begins. You must avoid more attention before you escape completely
+
+The cops in this game, however, are speed cheaters so escaping 5-6 stars this way is near impossible.
 
 ### Changes to the police response
 * 1-3 stars are basically the same with some minor changes
@@ -27,7 +29,7 @@ This mod alters police response in GTA SA to be more like GTA IV:
   * If SWAT is pursuing you and the wanted level is cleared in any way, or you are defeated by the cops, the next time you get 4 stars or more, you will instead encounter the FBI. And vice versa.
 
 * 5 stars: police will drive more aggressively and begins to shoot at you from their cars (also known as drive-by)
-  * If you cause troubles quickly enough, instead of the regular police helicopter, you will encounter two attack helicopters.
+  * If you cause trouble quickly enough, instead of the regular police helicopter, you will encounter two attack helicopters.
   * These are actually Raindance painted in black (to imitate GTA IV's Annihilator).
   * SWAT members onboard will shoot at you from the air with their submachine gun.
   * In certain places, a SWAT member will spawn on top of one of the buildings with a sniper rifle.
