@@ -39,6 +39,11 @@ This mod alters police response in GTA SA to be more like GTA IV:
 * Also, the unused desert sheriff model is now back in the game.
   * There is also an option to not have this (in the supplementary branch)
 
+## Recommended Mods to Install With
+* (https://libertycity.net/files/gta-san-andreas/220104-cop-n-threat-radar.html)[CopN'Threat Radar] from Silvout
+* (https://libertycity.net/files/gta-san-andreas-ios-android/194843-wanted-radar-warning.html)[Wanted Radar Warning] from Dimon_gta
+* (https://libertycity.net/files/gta-san-andreas/10649-tbogt-weapons-gta-iv-hud.html)[TBoGT-weapons + GTA IV HUD] from вавилон
+
 ## History
 ### Update 4.0
 * Implemented the Search Radius System like GTA IV
