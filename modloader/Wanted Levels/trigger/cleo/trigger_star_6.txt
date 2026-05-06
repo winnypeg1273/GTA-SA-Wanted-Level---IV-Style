@@ -4,10 +4,7 @@
 wait 0
 if and
     Player.Defined($PLAYER_CHAR)
-    not Player.WantedLevel($PLAYER_CHAR) > 5
-jf @Noname_01
-if
-  0154:   actor $PLAYER_ACTOR in_zone 'REST'
+    not Player.WantedLevel($PLAYER_CHAR) > 4
 jf @Noname_01
 
 :Noname_02
@@ -15,9 +12,16 @@ if and
 0A0C:   player $PLAYER_CHAR on_jetpack
 00FE:   actor $PLAYER_ACTOR sphere 0 in_sphere 267.6046 1881.8816 -30.0450 radius 15.0 15.0 3.0
 jf @Noname_03
-jump @Noname_05
+Player.SetMinWantedLevel(0,6)
+jump @Noname_01
 
 :Noname_03
+if or
+00C2:   sphere_onscreen 201.955 1880.265 29.484 radius 250.0
+00C2:   sphere_onscreen 1716.503 -2537.089 31.487 radius 250.0
+00C2:   sphere_onscreen -1320.687 154.746 31.554 radius 250.0
+00C2:   sphere_onscreen 1428.079 1448.720 31.026 radius 250.0
+jf @Noname_01
 if 
   Actor.DrivingVehicleType($PLAYER_ACTOR, #HYDRA)
 jf @Noname_04
@@ -36,5 +40,5 @@ jf @Noname_01
 jump @Noname_05
 
 :Noname_05
-Player.SetMinWantedLevel(0,6)
+Player.SetMinWantedLevel(0,5)
 jump @Noname_01
