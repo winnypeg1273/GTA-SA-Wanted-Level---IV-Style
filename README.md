@@ -53,6 +53,12 @@ The cops in this game, however, are speed cheaters so escaping 5-6 stars this wa
 * [TBoGT-weapons + GTA IV HUD](https://libertycity.net/files/gta-san-andreas/10649-tbogt-weapons-gta-iv-hud.html) from вавилон
 
 ## History
+### Update 4.7
+* Cops will not spawn on foot near player at 3 stars or higher, unless in military bases
+* If the player is farther away, the cops can only detect if they are in front of them
+* Tweaked the speed and spawn distance of the helicopters
+* The attack helicopters will now also leave in case of a sandstorm
+
 ### Update 4.0
 * Implemented the Search Radius System like GTA IV
 * Changed the scripts so that attack helicopters respond to how fast the player gains attention
