@@ -54,7 +54,7 @@ The cops in this game, however, are speed cheaters so escaping 5-6 stars this wa
 
 ## History
 ### Update 4.7
-* Cops will not spawn on foot near player at 3 stars or higher, unless in military bases
+* Cops will not spawn on foot near player at 3 stars or higher, unless in military bases (adapted from [TweaksSA](https://libertycity.net/files/gta-san-andreas/200697-tweakssa-v131.html) mod)
 * If the player is farther away, the cops can only detect if they are in front of them
 * Tweaked the speed and spawn distance of the helicopters
 * The attack helicopters will now also leave in case of a sandstorm
