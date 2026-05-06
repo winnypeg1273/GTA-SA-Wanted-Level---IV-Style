@@ -53,6 +53,10 @@ The cops in this game, however, are speed cheaters so escaping 5-6 stars this wa
 * [TBoGT-weapons + GTA IV HUD](https://libertycity.net/files/gta-san-andreas/10649-tbogt-weapons-gta-iv-hud.html) from вавилон
 
 ## History
+### Update 4.7.1
+* Cops will react if you aim at another cop (1 star)
+* You can get 5 stars by shooting rockets from attack aircrafts at the airports and Area 69
+
 ### Update 4.7
 * Cops will not spawn on foot near player at 3 stars or higher, unless in military bases (adapted from [TweaksSA](https://libertycity.net/files/gta-san-andreas/200697-tweakssa-v131.html) mod)
 * If the player is farther away, the cops can only detect if they are in front of them
