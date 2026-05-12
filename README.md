@@ -11,7 +11,7 @@ This mod alters police response in GTA SA to be more like GTA IV:
 * You can lose the cops by leaving the search area.
   * The search area grows as you gain wanted level
   * If you get spotted by the nearby officers, the search area recenters at your position
-  * You will always be seen if you are flying, or inside a restricted area
+  * You will always be seen if you are flying, or inside a restricted area or city
   * The guys on the helicopters can see you from further away
   * Your wanted level won't automatically drop in urban areas
   * After you leave the search area, the cooldown period begins. You must avoid more attention before you escape completely
@@ -64,6 +64,7 @@ The cops in this game, however, are speed cheaters so escaping 5-6 stars this wa
 * Added status indicator for police stars
 * Disabled respray garage within sight of cops, except during the driving school missions
 * Merged the codes and reduced the number of scripts with memory addresses for weapons
+* Fixed the bug where the 4-star search area sometimes doesn't automatically recenter while in locked cities (though there might more efficient methods)
 
 ### Update 4.7.1
 * Cops will react if you aim at another cop (1 star)
