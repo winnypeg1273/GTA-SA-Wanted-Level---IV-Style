@@ -2,12 +2,12 @@
 0000: NWLS
 
 WHILE 8256:   not player $PLAYER_CHAR defined 
-    wait 250
+    wait 0
 END                                                                   
                                                                                    
 REPEAT
     wait 0                                                                                 
-UNTIL 010F:   player $PLAYER_CHAR wanted_level > 3   
+UNTIL 010F:   player $PLAYER_CHAR wanted_level > 2   
 
         0247: load_model #COPCARRU
         0247: load_model #COPCARLA
@@ -94,18 +94,7 @@ REPEAT
     wait 0
 UNTIL 0256:   player $PLAYER_CHAR defined   
 
-IF
-    $ONMISSION == 1
-THEN
-    IF OR
-        0741:   actor $PLAYER_ACTOR busted
-        0118:   actor $PLAYER_ACTOR dead
-    THEN
-    BREAK
-    END
-END
-
-0652: 30@ = integer_stat 82
+0652: 30@ = integer_stat 82  
 IF
     30@ == 0
 THEN
@@ -121,17 +110,35 @@ END
 0A8C: 7@ 4 #COPCARVG 1 
   
 01C0: 0@ = player $PLAYER_CHAR wanted_level
+
+WHILE 0039:   0@ == 3  
+        wait 0
+        01C0: 0@ = player $PLAYER_CHAR wanted_level 
+        gosub @COP_ZONES
+        gosub @COP_WEAPONS                   
+           
+        wait 0
+        0A8C: 4@ 4 #COPCARRU 1
+        0A8C: 5@ 4 #COPCARLA 1
+        0A8C: 6@ 4 #COPCARSF 1
+        0A8C: 7@ 4 #COPCARVG 1
+        
+        wait 0
+        0A8C: 4@ 4 28@ 1
+END
+
 WHILE 0039:   0@ == 4  
         wait 0
         01C0: 0@ = player $PLAYER_CHAR wanted_level 
-        gosub @COP_ZONES                   
+        gosub @COP_ZONES
+        gosub @COP_WEAPONS                    
            
         wait 0
-        0A8C: 4@ 4 28@ 1
+        0A8C: 4@ 4 #COPCARRU 1
         0A8C: 5@ 4 #COPCARLA 1
         0A8C: 6@ 4 #COPCARSF 1
         0A8C: 7@ 4 #COPCARVG 1 
-        0A8C: 8@ 4 29@ 1
+        0A8C: 8@ 4 29@ 1        
         
         IF 30@ == 1
         THEN
@@ -146,6 +153,7 @@ WHILE 0039:   0@ == 5
         0A8C: 14@ 1 0x5 1 
         
         gosub @COP_ZONES
+        gosub @COP_WEAPONS 
          
         
         0A8C: 9@ 4 29@ 1
@@ -164,11 +172,12 @@ END
 
 01C0: 0@ = player $PLAYER_CHAR wanted_level  
 
-WHILE 0039:   0@ == 6         
+WHILE 0029:   0@ >= 6         
         wait 0  
         01C0: 0@ = player $PLAYER_CHAR wanted_level
         
         gosub @COP_ZONES
+        gosub @COP_WEAPONS 
          
         0A8C: 9@ 4 29@ 1
         0A8C: 12@ 4 29@ 1
@@ -190,19 +199,31 @@ END
 
 :COP_ZONES
 28@ = #COPCARRU
+0A8D: 22@ = read_memory 0xC87AB9 size 1 virtual_protect 0
 0085: 29@ = 27@
+
 IF $CURRENT_TOWN_NUMBER == 1
 THEN
     28@ = #COPCARLA
 END    
+
 IF $CURRENT_TOWN_NUMBER == 2
 THEN
     28@ = #COPCARSF
-END    
+END  
+  
 IF $CURRENT_TOWN_NUMBER == 3
 THEN
     28@ = #COPCARVG
-END    
+END 
+   
+IF AND 
+0@ >= 4
+22@ == 16
+THEN
+    0085: 28@ = 27@ 
+END
+
 IF 0583: player $PLAYER_CHAR in_zone 'REST'
 THEN
     28@ = #BARRACKS
@@ -210,5 +231,33 @@ THEN
     IF 0@ == 4
     THEN 29@ = #BARRACKS
     END
+END
+RETURN
+
+:COP_WEAPONS 
+IF 0@ >= 5
+THEN
+    0A8C: write_memory 0x5DDCE5 size 1 value 60 virtual_protect 0 //Cops Shoot Rate
+    0A8C: write_memory 0x5DDCEC size 1 value 75 virtual_protect 0 //Cops Accuracy
+ELSE
+    0A8C: write_memory 0x5DDCE5 size 1 value 30 virtual_protect 0 //Cops Shoot Rate
+    0A8C: write_memory 0x5DDCEC size 1 value 60 virtual_protect 0 //Cops Accuracy    
+END
+
+IF 0@ >= 6
+THEN 
+    0A8C: write_memory 0x5DDDA1 size 1 value 31 virtual_protect 0 //SWAT
+    0A8C: write_memory 0x5DDDAA size 1 value 31 virtual_protect 0
+    0A8C: write_memory 0x5DDDC2 size 1 value 50 virtual_protect 0
+    0A8C: write_memory 0x5DDDE1 size 1 value 31 virtual_protect 0 //FBI
+    0A8C: write_memory 0x5DDDEA size 1 value 31 virtual_protect 0
+    0A8C: write_memory 0x5DDE02 size 1 value 40 virtual_protect 0
+ELSE
+    0A8C: write_memory 0x5DDDA1 size 1 value 28 virtual_protect 0 //SWAT
+    0A8C: write_memory 0x5DDDAA size 1 value 28 virtual_protect 0
+    0A8C: write_memory 0x5DDDC2 size 1 value 70 virtual_protect 0
+    0A8C: write_memory 0x5DDDE1 size 1 value 29 virtual_protect 0 //FBI
+    0A8C: write_memory 0x5DDDEA size 1 value 29 virtual_protect 0  
+    0A8C: write_memory 0x5DDE02 size 1 value 60 virtual_protect 0  
 END
 RETURN
