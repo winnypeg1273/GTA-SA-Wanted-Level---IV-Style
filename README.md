@@ -16,6 +16,12 @@ This mod alters police response in GTA SA to be more like GTA IV:
   * Your wanted level won't automatically drop in urban areas
   * After you leave the search area, the cooldown period begins. You must avoid more attention before you escape completely
 
+* Your status is indicated by the star color:
+  * Bright yellow: you are in sight of the cops
+  * Dim yellow: you are out of their sight, though still within the search area
+  * Greyed stars: you are getting out of the area without being seen
+  * Flashing stars: cooldown period
+
 The cops in this game, however, are speed cheaters so escaping 5-6 stars this way is near impossible.
 
 ### Changes to the police response
@@ -41,6 +47,7 @@ The cops in this game, however, are speed cheaters so escaping 5-6 stars this wa
 * The tank has also been nerfed so that it may take a little damage from nearby explosions. Be mindful when you shoot the cannon or crush cars.
 * When the tank's HP gets to the lower half, it will emit smoke and the engine will stop for a few seconds after firing the cannon.
 * The police helicopters in pursuit now always have SWAT pilots controlling them. For the news choppers, it's the civilians.
+* Respray shops will not open within the cops sight
 * Inside military bases, soldier models will spawn instead of normal cops (a feature from PedTweaks by Cyclone92)
   * Around Area 69, the military will first send out only military trucks, and eventually tanks
   * This is also the only scenario where you may encounter the military giving chase
@@ -53,6 +60,11 @@ The cops in this game, however, are speed cheaters so escaping 5-6 stars this wa
 * [TBoGT-weapons + GTA IV HUD](https://libertycity.net/files/gta-san-andreas/10649-tbogt-weapons-gta-iv-hud.html) from вавилон
 
 ## History
+### Update 5.0
+* Added status indicator for police stars
+* Disabled respray garage within sight of cops, except during the driving school missions
+* Merged the codes and reduced the number of scripts with memory addresses for weapons
+
 ### Update 4.7.1
 * Cops will react if you aim at another cop (1 star)
 * You can get 5 stars by shooting rockets from attack aircrafts at the airports and Area 69
