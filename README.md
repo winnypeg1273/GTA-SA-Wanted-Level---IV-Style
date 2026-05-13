@@ -64,6 +64,7 @@ The cops in this game, however, are speed cheaters so escaping 5-6 stars this wa
 * The mod now can safely disable respray & mod garages from 3 stars
 * Increased the search distance while in the open water
 * Refactored the code for star colors so they appear more smoothly
+* Weather can now affect the search distance
 
 ### Update 5.0
 * Added status indicator for police stars
