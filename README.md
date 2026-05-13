@@ -60,6 +60,11 @@ The cops in this game, however, are speed cheaters so escaping 5-6 stars this wa
 * [TBoGT-weapons + GTA IV HUD](https://libertycity.net/files/gta-san-andreas/10649-tbogt-weapons-gta-iv-hud.html) from вавилон
 
 ## History
+### Update 5.3
+* The mod now can safely disable respray & mod garages from 3 stars
+* Increased the search distance while in the open water
+* Refactored the code for star colors so they appear more smoothly
+
 ### Update 5.0
 * Added status indicator for police stars
 * Disabled respray garage within sight of cops, except during the driving school missions
