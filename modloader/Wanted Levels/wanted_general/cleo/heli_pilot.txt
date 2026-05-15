@@ -1,0 +1,164 @@
+// This file was decompiled using SASCM.ini published on 2021-01-30
+{$CLEO .cs}
+
+0000: NOP 
+
+:Noname_2
+wait 0 
+if 
+   Player.Defined($PLAYER_CHAR)
+jf @Noname_2 
+if 
+   Player.WantedLevel($PLAYER_CHAR) > 2
+jf @Noname_2
+0652: 30@ = integer_stat 83
+if
+    30@ == 1
+jf @Noname_201
+jump @Noname_297
+
+:Noname_201
+if
+   not Player.WantedLevel($PLAYER_CHAR) > 4     
+jf @Noname_2
+
+:Noname_297
+read_memory 0@ 12700004 4 0 
+gosub @Noname_325 
+jump @Noname_679 
+
+:Noname_325
+if 
+  0@ > 0 
+jf @Noname_599 
+if 
+803B:   not  1@ == 0@ // (int) 
+jf @Noname_1061 
+read_memory 1@ 12010644 4 0 
+call_method_return 4342112 1@ 1 0 0@ 1@ 
+046C: 2@ = car 1@ driver 
+if 
+   not 2@ > 0 
+jf @Noname_599 
+if 
+   Car.Model(1@) == #VCNMAV
+jf @Noname_522 
+Model.Load(#WMYBU)
+Model.Load(#SBFYRI)
+
+:Noname_452
+wait 0 
+if and
+   Model.Available(#WMYBU)
+   Model.Available(#SBFYRI)
+jf @Noname_604
+Actor.CreateAsDriver(3@, PedType.CivMale, #WMYBU, 1@)
+Actor.CreateAsPassenger(4@, PedType.CivFemale, #SBFYRI, 1@, 0)
+//Model.Destroy(#WMYBU)
+//Model.Destroy(#SBFYRI)
+jump @Noname_599 
+
+:Noname_522
+if 
+   Car.Model(1@) == #POLMAV
+jf @Noname_599 
+Model.Load(#SWAT)
+
+:Noname_546
+wait 0 
+if 
+   Model.Available(#SWAT)
+jf @Noname_604
+Actor.CreateAsDriver(3@, PedType.Cop, #SWAT, 1@)
+Actor.CreateAsPassenger(4@, PedType.Cop, #SWAT, 1@, 0)
+//Model.Destroy(#SWAT)
+
+:Noname_599
+if
+051A:   actor 3@ damaged_by_actor $PLAYER_ACTOR 
+jf @Noname_1061 
+0564: heli 1@ simulate_crash_landing 
+wait 2500 
+16@ = Car.Health(1@)
+if 
+  16@ > 100 
+jf @Noname_1061 
+Car.Health(1@) = 240
+Actor.RemoveReferences(3@)
+Actor.RemoveReferences(4@)
+
+:Noname_604
+Car.RemoveReferences(1@)
+return 
+
+:Noname_679
+read_memory 10@ 12700008 4 0 
+gosub @Noname_707 
+jump @Noname_2 
+
+:Noname_707
+if 
+  10@ > 0 
+jf @Noname_981 
+if 
+803B:   not  10@ == 0@ // (int) 
+jf @Noname_1061 
+read_memory 11@ 12010644 4 0 
+call_method_return 4342112 11@ 1 0 10@ 11@ 
+046C: 12@ = car 11@ driver 
+if 
+   not 12@ > 0 
+jf @Noname_981 
+if 
+   Car.Model(11@) == #VCNMAV
+jf @Noname_904 
+Model.Load(#WMYBU)
+Model.Load(#SBFYRI)
+
+:Noname_834
+wait 0 
+if and
+   Model.Available(#WMYBU)
+   Model.Available(#SBFYRI)
+jf @Noname_990 
+Actor.CreateAsDriver(13@, PedType.CivMale, #WMYBU, 11@)
+Actor.CreateAsPassenger(14@, PedType.CivFemale, #SBFYRI, 11@, 0)
+//Model.Destroy(#WMYBU)
+//Model.Destroy(#SBFYRI)
+jump @Noname_981 
+
+:Noname_904
+if 
+   Car.Model(11@) == #POLMAV
+jf @Noname_981 
+Model.Load(#SWAT)
+
+:Noname_928
+wait 0 
+if 
+   Model.Available(#SWAT)
+jf @Noname_990
+Actor.CreateAsDriver(13@, PedType.Cop, #SWAT, 11@)
+Actor.CreateAsPassenger(14@, PedType.Cop, #SWAT, 11@, 0)
+//Model.Destroy(#SWAT)
+
+:Noname_981
+if
+051A:   actor 13@ damaged_by_actor $PLAYER_ACTOR 
+jf @Noname_1061 
+0564: heli 11@ simulate_crash_landing 
+wait 2500 
+17@ = Car.Health(11@)
+if 
+  17@ > 100 
+jf @Noname_1061 
+Car.Health(11@) = 240
+Actor.RemoveReferences(13@)
+Actor.RemoveReferences(14@)
+
+:Noname_990
+Car.RemoveReferences(11@)
+return 
+
+:Noname_1061
+return 
