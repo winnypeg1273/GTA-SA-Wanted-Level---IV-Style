@@ -11,7 +11,7 @@ jf @Noname_2
 if 
    Player.WantedLevel($PLAYER_CHAR) > 2
 jf @Noname_2
-0652: 30@ = integer_stat 82
+0652: 30@ = integer_stat 83
 if
     30@ == 1
 jf @Noname_201

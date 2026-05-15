@@ -3,7 +3,8 @@
 
 WHILE 8256:   not player $PLAYER_CHAR defined 
     wait 0
-END                                                                   
+END         
+                                                      
                                                                                    
 REPEAT
     wait 0                                                                                 

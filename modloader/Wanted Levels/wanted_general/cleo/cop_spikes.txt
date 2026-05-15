@@ -35,9 +35,7 @@ jf @POLICESPIKES_1
 15@ = #SFPD1 
 
 :POLICESPIKES_7
-06AC: 20@ = actor $PLAYER_ACTOR movement_speed
-IF OR
-   20@ > 20.0 
+IF
    Actor.Driving($PLAYER_ACTOR)
 jf @POLICESPIKES_1
 if or
@@ -53,10 +51,14 @@ JUMP @POLICESPIKES_1
 
 :POLICESPIKES_12   
 03C0: 0@ = actor $PLAYER_ACTOR car 
+if
+    not Car.Wrecked(0@)
+jf @POLICESPIKES_1
 0407: store_coords_to 1@ 2@ 3@ from_car 0@ with_offset 0.0 100.0 0.0
 02C0: store_to 4@ 5@ 6@ ped_path_coords_closest_to 1@ 2@ 3@
-if
+if and
     0100: actor $PLAYER_ACTOR in_sphere 4@ 5@ 6@ radius 100.0 100.0 100.0 sphere 0 in_car
+    80FE: not actor $PLAYER_ACTOR sphere 0 in_sphere 4@ 5@ 6@ radius 25.0 25.0 25.0
 jf @POLICESPIKES_1                        
 if and
     0496: tire 0 on_car 0@ deflated
@@ -136,11 +138,11 @@ jump @POLICESPIKES_121
 :POLICESPIKES_85
 0400: store_coords_to 7@ 8@ 9@ from_object 10@ with_offset 0.0 0.0 0.0 
 get_random_car_in_sphere_no_save_recursive 0@ 7@ 8@ 9@ 3.0 0 1
-if
-056E:   car 0@ defined  
-jf @POLICESPIKES_52
 
 :POLICESPIKES_121
+if
+    not Car.Wrecked(0@)
+jf @POLICESPIKES_52
 053F: set_car 0@ tires_vulnerability 1
 04FE: deflate_tire 0 on_car 0@ 
 04FE: deflate_tire 1 on_car 0@ 
