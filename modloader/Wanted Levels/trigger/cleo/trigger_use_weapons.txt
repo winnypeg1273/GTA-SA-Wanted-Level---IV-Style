@@ -1,0 +1,268 @@
+{$CLEO .cs}
+{$USE CLEO+}
+0000:
+03A4: script_name 'AIM'
+
+:weapons_0
+if 2@ <> 0
+jf @weapons_2
+2@ = 0
+
+:weapons_2
+wait 0 
+if
+   Player.Defined($PLAYER_CHAR)
+jf @weapons_0
+0@ = Player.WantedLevel($PLAYER_CHAR)
+1@ = 0
+
+:vehicle_01
+if
+    Actor.Driving($PLAYER_ACTOR)
+jf @jetpack
+if 
+    not Actor.DrivingVehicleType($PLAYER_ACTOR, #COMBINE)
+jf @shooting_33   
+if or
+    00E1:   player 0 pressed_key 17
+    00E1:   player 0 pressed_key 4
+jf @weapons_2
+if and
+    not Actor.DrivingVehicleType($PLAYER_ACTOR, #FIRETRUK)
+    not Actor.DrivingVehicleType($PLAYER_ACTOR, #SWATVAN)
+jf @firetruck
+if and
+    not Actor.DrivingVehicleType($PLAYER_ACTOR, #HYDRA)
+    not Actor.DrivingVehicleType($PLAYER_ACTOR, #RHINO)
+    not Actor.DrivingVehicleType($PLAYER_ACTOR, #HUNTER) 
+jf @mounted
+
+:drive_by
+0E8B: get_char_weapon_state $PLAYER_ACTOR store_to 20@
+if 20@ == 1
+jf @weapons_2
+jump @shooting_33
+
+:firetruck
+if 0@ < 2
+jf @weapons_2
+if and
+    80E1:   not player 0 pressed_key 5
+    80E1:   not player 0 pressed_key 7
+jf @drive_by
+1@ = 407
+jump @shooting_33     
+
+
+
+:jetpack
+if 0@ <= 5
+jf @weapons_2
+if and
+    0A0C:   player $PLAYER_CHAR on_jetpack
+    00FE:   actor $PLAYER_ACTOR sphere 0 in_sphere 267.6046 1881.8816 -30.0450 radius 15.0 15.0 3.0
+jf @shooting_01
+Player.SetMinWantedLevel($PLAYER_CHAR, 6)
+jump @weapons_2
+
+
+:shooting_01
+0470: 12@ = actor $PLAYER_ACTOR current_weapon
+if 
+    12@ > 8 // unarmed or melee
+jf @weapons_2
+0782: get_weapon_with_ID 12@ weapon_group_to 13@ 
+if and 
+    13@ <> 6
+    12@ <> 9
+    12@ <> 40
+jf @shooting_33
+if or
+    13@ == 8
+    13@ == 7
+jf @aimcop_48
+5@ = 4
+jump @airports 
+
+
+                      
+:aimcop_48
+wait 0
+if 0@ < 3
+jf @weapons_2
+if
+    00E1:   player 0 pressed_key 6
+jf @weapons_2
+get_char_player_is_targeting 11@ $PLAYER_CHAR
+if 
+   056D:   actor 11@ defined 
+jf @weapons_2 
+089F: get_actor 11@ pedtype_to 9@
+if
+  9@ == 6
+jf @aimcop_71
+if and
+    Actor.Dead(11@)
+    051A: actor 11@ damaged_by_actor $PLAYER_ACTOR
+jf @aimped_12
+Player.SetMinWantedLevel(0,3)
+jump @aimcop_77
+
+:aimcop_71
+if or
+   9@ == 18
+   9@ == 19
+jf @aimped_01
+if and
+    Actor.Dead(11@)
+    051A: actor 11@ damaged_by_actor $PLAYER_ACTOR
+jf @aimped_12
+Player.SetMinWantedLevel(0,2)
+jump @aimcop_77     
+
+:aimped_01
+if or
+  9@ == 4
+  9@ == 5
+  9@ == 20
+  9@ == 23
+jf @aimcop_77  
+0470: 14@ = actor 11@ current_weapon
+//0E44: get_char_kill_target_char 11@ store_to 12@
+if or
+    14@ > 42
+    14@ < 16
+    //07D6: not 12@ == $PLAYER_ACTOR  // int
+jf @aimcop_77
+12@ = 0
+
+:aimped_12
+0EA5: get_closest_cop_near_char $PLAYER_ACTOR radius 20.0 alive 1 in_car 1 on_foot 1 seen_in_front 1 store_to 7@
+if 
+   056D:   actor 7@ defined
+jf @weapons_2 
+if
+   0364:   actor 7@ spotted_actor $PLAYER_ACTOR
+jf @aimcop_48  
+if
+   051A: actor 11@ damaged_by_actor $PLAYER_ACTOR
+jf @aimped_51
+Player.SetMinWantedLevel(0,2)
+jump @aimped_77 
+
+:aimped_51
+if
+   0457:   player $PLAYER_CHAR aiming_at_actor 11@
+jf @aimped_77
+Player.SetMinWantedLevel(0,1)
+
+:aimped_77
+7@ = 0   
+
+:aimcop_77
+11@ = 0
+jump @aimcop_48
+
+
+:mounted
+5@ = 5
+1@ = 432
+
+:airports
+if
+    001D:   5@ > 0@  // (int)
+jf @weapons_2
+if or
+    02EE:   projectile_in_cube_cornerA 1536.979 1143.878 0.000 cornerB 1380.025 1840.004 100.00
+    02EE:   projectile_in_cube_cornerA 109.862 1800.463 0.000 cornerB 389.522 2080.764 100.0
+    02EE:   projectile_in_cube_cornerA -1601.271 488.263 12.392 cornerB -1098.362 -210.755 100.0
+    02EE:   projectile_in_cube_cornerA 1384.610 -2472.647 13.554 cornerB 2117.264 -2488.556 100.0
+jf @shooting_33
+Player.SetMinWantedLevel(0, 5@)
+jump @weapons_2
+
+
+:shooting_33
+wait 0
+if
+    0@ < 3
+jf @weapons_2
+0EA5: get_closest_cop_near_char $PLAYER_ACTOR radius 40.0 alive 0 in_car 1 on_foot 1 seen_in_front 0 store_to 7@
+if 
+   056D:   actor 7@ defined 
+jf @weapons_2
+089F: get_actor 7@ pedtype_to 9@ 
+if
+   9@ == 6
+jf @shooting_87
+if
+    1@ <> 407
+jf @firetruck_01
+if and
+    051A:  actor 7@ damaged_by_actor $PLAYER_ACTOR
+    Actor.Dead(7@)
+jf @shooting_34
+0ECE: get_time_char_is_dead 7@ store_to 15@
+if
+    15@ < 1500
+jf @shooting_87
+Player.SetMinWantedLevel(0,3)
+jump @shooting_87
+
+:shooting_34
+if and
+    051A:  actor 7@ damaged_by_actor $PLAYER_ACTOR
+    0EA4: is_char_on_fire 7@
+jf @shooting_35
+Player.SetMinWantedLevel(0,3)
+jump @shooting_87
+
+:shooting_35
+if and
+    82D8:  not actor $PLAYER_ACTOR current_weapon == 40
+    82D8:  not actor $PLAYER_ACTOR current_weapon == 34
+jf @shooting_87
+if
+   02E0:   actor $PLAYER_ACTOR firing_weapon
+jf @shooting_36
+Player.SetMinWantedLevel(0,2)
+jump @shooting_87
+
+:shooting_36
+if 1@ == 432
+jf @shooting_87 
+Player.SetMinWantedLevel(0,2)
+jump @shooting_87
+
+:firetruck_01
+wait 0
+if
+    not Actor.Dead(7@)
+jf @weapons_2
+if or
+    Actor.Animation(7@) == "KO_skid_back"
+    Actor.Animation(7@) == "KO_skid_front"
+    Actor.Animation(7@) == "KO_spin_L"
+    Actor.Animation(7@) == "KO_spin_R"
+jf @shooting_87
+if 
+    2@ == 0
+jf @firetruck_02
+TIMERA = 0
+2@ = 1
+Player.SetMinWantedLevel(0,1)
+jump @shooting_87
+
+:firetruck_02
+if TIMERA > 1000
+jf @shooting_87
+TIMERA = 0
+2@ += 1
+if 2@ >= 7
+jf @shooting_87
+2@ = 0
+Player.SetMinWantedLevel(0,2)
+
+:shooting_87
+7@ = 0
+jump @weapons_2
