@@ -63,6 +63,7 @@ The cops in this game, however, are speed cheaters so escaping 5-6 stars this wa
 ### Update 5.6
 * Fixed bugs that cause crash related to the spike script
 * If you use weapons during cooldown, the cops won't find you unless you actually cause damage
+* Combined scripts for firetruck & airport triggers
 
 ### Update 5.3
 * The mod now can safely disable respray & mod garages from 3 stars
