@@ -10,7 +10,7 @@ This mod will implement GTA IV's police response in GTA San Andreas
 This mod alters police response in GTA SA to be more like GTA IV:
 * You can lose the cops by leaving the search area.
   * The search area grows as you gain wanted level
-  * If you get spotted by the nearby officers, the search area recenters at your position
+  * If you get spotted by the nearby officers, the search area recenters at your position for 5 seconds
   * You will always be seen if you are flying, or inside a restricted area or city
   * The guys on the helicopters can see you from further away
   * Your wanted level won't automatically drop in urban areas
@@ -60,6 +60,11 @@ The cops in this game, however, are speed cheaters so escaping 5-6 stars this wa
 * [TBoGT-weapons + GTA IV HUD](https://libertycity.net/files/gta-san-andreas/10649-tbogt-weapons-gta-iv-hud.html) from вавилон
 
 ## History
+### Update 5.7
+* The search zone will recenter for 5 seconds if the cops spotted player
+* Using weapons or play vigilante missions will reveal player location
+* Once spotted, cops will drive at double speed
+
 ### Update 5.6
 * Fixed bugs that cause crash related to the spike script
 * If you use weapons during cooldown, the cops won't find you unless you actually cause damage
