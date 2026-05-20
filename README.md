@@ -2,7 +2,7 @@
 This mod will implement GTA IV's police response in GTA San Andreas
 
 ## Installation
-* Install Modloader & CLEO
+* Install Modloader & CLEO 4.3+ (cleo+ required)
 * Download and extract
 * Move the Wanted Levels folder to the modloader folder
 
