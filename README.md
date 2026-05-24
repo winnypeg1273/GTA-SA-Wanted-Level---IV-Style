@@ -27,7 +27,7 @@ The cops in this game, however, are speed cheaters so escaping 5-6 stars this wa
 ### Changes to the police response
 * 1-3 stars are basically the same with some minor changes
   * Aiming at cops will guarantee 1 star and 3 stars if the officer is killed
-  * Aiming at a civilian in sight of a cop guarantees 1 star, and 2 stars for shooting and injuring them in the sight of a cop
+  * Aiming at a civilian in sight of a cop guarantees 1 star, and at the same time if you shoot and injure them you get 2 stars
   * You may get a wanted level from climbing on the top of a patrolling police car, or spraying cops using a firetruck water cannon
   * At 3 stars an officer may spawn ahead and deploy his spike strip to stop your vehicle
 
