@@ -60,7 +60,7 @@ The cops in this game, however, are speed cheaters so escaping 5-6 stars this wa
 * [TBoGT-weapons + GTA IV HUD](https://libertycity.net/files/gta-san-andreas/10649-tbogt-weapons-gta-iv-hud.html) from вавилон
 
 ## History
-### Beta 6.0
+### Update 6.0
 * Cops will have shorter detection range and slower speed if you change your vehicle
 
 ### Update 5.7
