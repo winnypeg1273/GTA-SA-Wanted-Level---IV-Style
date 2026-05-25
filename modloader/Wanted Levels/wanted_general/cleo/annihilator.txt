@@ -15,6 +15,8 @@ if and
    9@ == 0
    $ACTIVE_INTERIOR == 0   
 jf @Noname_01
+7@ = 1
+8@ = 1
 29@ = 0
 31@ = 0
 Model.Load(#RAINDANC)
@@ -32,7 +34,7 @@ jf @Noname_01
 jump @Noname_2
 
 :Noname_2
-28@ = 0 
+28@ = 0  
 
 :Noname_51
 if
@@ -120,11 +122,11 @@ if and
     Player.Defined($PLAYER_CHAR)
     Player.WantedLevel($PLAYER_CHAR) > 4
 jf @Noname_241 
-Car.StorePos(10@(28@,2i), 7@, 8@, 9@)
+Car.StorePos(10@(28@,2i), 1@, 2@, 3@)
 gosub @Noname_262
 if and
     $ACTIVE_INTERIOR == 0
-    00FE:   actor $PLAYER_ACTOR sphere 0 near_point 7@ 8@ 9@ radius 540.0 540.0 120.0 
+    00FE:   actor $PLAYER_ACTOR sphere 0 near_point 1@ 2@ 3@ radius 540.0 540.0 120.0 
 jf @Noname_242
 0D59: 22@ = current_weather
 if 
@@ -133,8 +135,29 @@ jf @Noname_242
 if
    not Car.Wrecked(10@(28@,2i))
 jf @Noname_237 
+if
+    get_extended_char_var $PLAYER_ACTOR "COPSEEN" 1 0@
+jf @Noname_154
 
 :Noname_152
+if 
+    0@ == 0
+jf @Noname_153 
+if 
+    7@(28@,2i) <> 0
+jf @Noname_154
+    7@(28@,2i) = 0    
+    07BB: set_heli 10@(28@,2i) horizontal_thrust_power 0
+jump @Noname_154
+
+:Noname_153
+if 
+    7@(28@,2i) <> 1
+jf @Noname_154
+    7@(28@,2i) = 1
+    07BB: set_heli 10@(28@,2i) horizontal_thrust_power 1
+
+:Noname_154
 if 
    Actor.Dead(4@(28@,2i))
 jf @Noname_245
@@ -189,7 +212,7 @@ Model.Destroy(#MP5LNG)
 jump @Noname_01
 
 :Noname_262 
-0AE1: 6@ = random_char_near_point 7@ 8@ 9@ in_radius 100.0 find_next 1 pass_deads 1
+0AE1: 6@ = random_char_near_point 1@ 2@ 3@ in_radius 100.0 find_next 1 pass_deads 1
 if
     not Actor.Dead(6@)
 jf @Noname_263
