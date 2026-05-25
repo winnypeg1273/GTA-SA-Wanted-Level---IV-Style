@@ -37,7 +37,7 @@ if and
 jf @SNIPER_END
 //0513: show_text_box_1number 'SLOT_02' number 26@ 
 if
-  00FE:  actor $PLAYER_ACTOR sphere 0 in_sphere 2@ 3@ 4@ radius 50.0 50.0 100.0 
+  00FE:  actor $PLAYER_ACTOR sphere 0 in_sphere 2@ 3@ 4@ radius 45.0 45.0 100.0 
 jf @SNIPER_END 
 jump @SNIPER_146
 
@@ -51,13 +51,12 @@ jump @SNIPER_147
 
 :SNIPER_147
 wait 0 
-1@ = Actor.Create(Mission1, #SWAT, 2@, 3@, 4@)
+1@ = Actor.Create(Mission6, #SWAT, 2@, 3@, 4@)
 Actor.Angle(1@) = 77.0
 Actor.GiveWeaponAndAmmo(1@, SNIPERRIFLE, 1000)
 Actor.Health(1@) = 250
 02AB: set_actor 1@ immunities BP 0 FP 0 EP 0 CP 1 MP 0
-07DD: set_actor 1@ attack_rate 70 // previously known as temper_to 
-077A: set_actor 1@ acquaintance 4 to_actors_pedtype 0 // see ped.dat 
+07DD: set_actor 1@ attack_rate 50 // previously known as temper_to 
 085B: AS_actor 1@ set_kinda_stay_in_same_place 1
 0350: set_actor 1@ maintain_position_when_attacked 1 
 Actor.WeaponAccuracy(1@) = 90
