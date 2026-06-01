@@ -58,13 +58,14 @@ The cops in this game, however, are speed cheaters so escaping 5-6 stars this wa
 * [CopN'Threat Radar](https://libertycity.net/files/gta-san-andreas/220104-cop-n-threat-radar.html) from Silvout
 * [Wanted Radar Warning](https://libertycity.net/files/gta-san-andreas-ios-android/194843-wanted-radar-warning.html) from Dimon_gta
 * [TBoGT-weapons + GTA IV HUD](https://libertycity.net/files/gta-san-andreas/10649-tbogt-weapons-gta-iv-hud.html) from вавилон
+* [Time+Cops PayNSpray](https://libertycity.net/files/gta-san-andreas/203319-timecops-paynspray.html) from Artem.1.9.9.6.
 
 ## History
 ### Update 7.0 (Testing)
 * Cops now take some time to arrive at player's location at first.
 * The amount of time is dependent on the zone the player is in, and can be configured.
 * With a wanted level, players now can't buy tickets at airports.
-* Exceptions for driving school mission are changed to setting maximum wanted level at zero, avoiding the mod completely. This may help preventing crashes.
+* Removed the respray disabling feature (as it caused bugs). [Time+Cops PayNSpray](https://libertycity.net/files/gta-san-andreas/203319-timecops-paynspray.html) is recommended for this instead.
 
 ### Update 6.3
 * Added an .ini configuration file.
