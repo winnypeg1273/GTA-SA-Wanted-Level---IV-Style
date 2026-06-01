@@ -47,7 +47,7 @@ The cops in this game, however, are speed cheaters so escaping 5-6 stars this wa
 * The tank has also been nerfed so that it may take a little damage from nearby explosions. Be mindful when you shoot the cannon or crush cars.
 * When the tank's HP gets to the lower half, it will emit smoke and the engine will stop for a few seconds after firing the cannon.
 * The police helicopters in pursuit now always have SWAT pilots controlling them. For the news choppers, it's the civilians.
-* Respray shops will not open within the cops sight
+* Respray shops will not open within the cops sight. Also you cannot buy a ticket at airports while wanted.
 * Inside military bases, soldier models will spawn instead of normal cops (a feature from PedTweaks by Cyclone92)
   * Around Area 69, the military will first send out only military trucks, and eventually tanks
   * This is also the only scenario where you may encounter the military giving chase
@@ -60,6 +60,12 @@ The cops in this game, however, are speed cheaters so escaping 5-6 stars this wa
 * [TBoGT-weapons + GTA IV HUD](https://libertycity.net/files/gta-san-andreas/10649-tbogt-weapons-gta-iv-hud.html) from вавилон
 
 ## History
+### Update 7.0 (Testing)
+* Cops now take some time to arrive at player's location at first.
+* The amount of time is dependent on the zone the player is in, and can be configured.
+* With a wanted level, players now can't buy tickets at airports.
+* Exceptions for driving school mission are changed to setting maximum wanted level at zero, avoiding the mod completely. This may help preventing crashes.
+
 ### Update 6.3
 * Added an .ini configuration file.
 * With this you can modify search radius, detection ranges, police speed & duration of being seen.
