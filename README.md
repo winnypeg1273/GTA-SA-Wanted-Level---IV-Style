@@ -61,11 +61,14 @@ The cops in this game, however, are speed cheaters so escaping 5-6 stars this wa
 * [Time+Cops PayNSpray](https://libertycity.net/files/gta-san-andreas/203319-timecops-paynspray.html) from Artem.1.9.9.6.
 
 ## History
+### Update 7.1
+* Removed the respray disabling feature (as it caused bugs). [Time+Cops PayNSpray](https://libertycity.net/files/gta-san-andreas/203319-timecops-paynspray.html) is recommended for this instead.
+* Now the script will only check if you're too near a cop after respraying your car
+
 ### Update 7.0 (Testing)
 * Cops now take some time to arrive at player's location at first.
 * The amount of time is dependent on the zone the player is in, and can be configured.
 * With a wanted level, players now can't buy tickets at airports.
-* Removed the respray disabling feature (as it caused bugs). [Time+Cops PayNSpray](https://libertycity.net/files/gta-san-andreas/203319-timecops-paynspray.html) is recommended for this instead.
 
 ### Update 6.3
 * Added an .ini configuration file.
