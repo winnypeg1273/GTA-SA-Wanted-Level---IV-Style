@@ -63,7 +63,7 @@ The cops in this game, however, are speed cheaters so escaping 5-6 stars this wa
 ## History
 ### Update 7.1
 * Removed the respray disabling feature (as it caused bugs). [Time+Cops PayNSpray](https://libertycity.net/files/gta-san-andreas/203319-timecops-paynspray.html) is recommended for this instead.
-* Instead, now the script will only check if you're too near a cop after respraying your car
+* Now the script will only check if you're too near a cop after respraying your car
 
 ### Update 7.0 (Testing)
 * Cops now take some time to arrive at player's location at first.
