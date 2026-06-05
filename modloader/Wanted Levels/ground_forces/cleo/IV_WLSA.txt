@@ -109,6 +109,8 @@ END
 0A8C: 5@ 4 #COPCARLA 1
 0A8C: 6@ 4 #COPCARSF 1
 0A8C: 7@ 4 #COPCARVG 1 
+
+0006: 26@ = 0
   
 01C0: 0@ = player $PLAYER_CHAR wanted_level
 
@@ -236,29 +238,31 @@ END
 RETURN
 
 :COP_WEAPONS 
-IF 0@ >= 5
+IF
+    803B:   0@ <> 26@
 THEN
-    0A8C: write_memory 0x5DDCE5 size 1 value 60 virtual_protect 0 //Cops Shoot Rate
-    0A8C: write_memory 0x5DDCEC size 1 value 75 virtual_protect 0 //Cops Accuracy
-ELSE
-    0A8C: write_memory 0x5DDCE5 size 1 value 30 virtual_protect 0 //Cops Shoot Rate
-    0A8C: write_memory 0x5DDCEC size 1 value 60 virtual_protect 0 //Cops Accuracy    
+    IF 0@ >= 5
+    THEN
+        0A8C: write_memory 0x5DDCE5 size 1 value 60 virtual_protect 0 //Cops Shoot Rate
+        0A8C: write_memory 0x5DDCEC size 1 value 75 virtual_protect 0 //Cops Accuracy
+    ELSE
+        0A8C: write_memory 0x5DDCE5 size 1 value 30 virtual_protect 0 //Cops Shoot Rate
+        0A8C: write_memory 0x5DDCEC size 1 value 60 virtual_protect 0 //Cops Accuracy    
+    END
+    
+    IF 0@ >= 6
+    THEN 
+        0A8C: write_memory 0x5DDDA1 size 1 value 31 virtual_protect 0 //SWAT
+        0A8C: write_memory 0x5DDDAA size 1 value 31 virtual_protect 0
+        0A8C: write_memory 0x5DDDE1 size 1 value 31 virtual_protect 0 //FBI
+        0A8C: write_memory 0x5DDDEA size 1 value 31 virtual_protect 0
+    ELSE
+        0A8C: write_memory 0x5DDDA1 size 1 value 28 virtual_protect 0 //SWAT
+        0A8C: write_memory 0x5DDDAA size 1 value 28 virtual_protect 0
+        0A8C: write_memory 0x5DDDE1 size 1 value 29 virtual_protect 0 //FBI
+        0A8C: write_memory 0x5DDDEA size 1 value 29 virtual_protect 0  
+    END
 END
 
-IF 0@ >= 6
-THEN 
-    0A8C: write_memory 0x5DDDA1 size 1 value 31 virtual_protect 0 //SWAT
-    0A8C: write_memory 0x5DDDAA size 1 value 31 virtual_protect 0
-    0A8C: write_memory 0x5DDDC2 size 1 value 50 virtual_protect 0
-    0A8C: write_memory 0x5DDDE1 size 1 value 31 virtual_protect 0 //FBI
-    0A8C: write_memory 0x5DDDEA size 1 value 31 virtual_protect 0
-    0A8C: write_memory 0x5DDE02 size 1 value 40 virtual_protect 0
-ELSE
-    0A8C: write_memory 0x5DDDA1 size 1 value 28 virtual_protect 0 //SWAT
-    0A8C: write_memory 0x5DDDAA size 1 value 28 virtual_protect 0
-    0A8C: write_memory 0x5DDDC2 size 1 value 70 virtual_protect 0
-    0A8C: write_memory 0x5DDDE1 size 1 value 29 virtual_protect 0 //FBI
-    0A8C: write_memory 0x5DDDEA size 1 value 29 virtual_protect 0  
-    0A8C: write_memory 0x5DDE02 size 1 value 60 virtual_protect 0  
-END
+0085: 26@ = 0@
 RETURN
