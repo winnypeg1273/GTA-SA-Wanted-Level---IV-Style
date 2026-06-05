@@ -47,7 +47,6 @@ The cops in this game, however, are speed cheaters so escaping 5-6 stars this wa
 * The tank has also been nerfed so that it may take a little damage from nearby explosions. Be mindful when you shoot the cannon or crush cars.
 * When the tank's HP gets to the lower half, it will emit smoke and the engine will stop for a few seconds after firing the cannon.
 * The police helicopters in pursuit now always have SWAT pilots controlling them. For the news choppers, it's the civilians.
-* Respray shops will not open within the cops sight. Also you cannot buy a ticket at airports while wanted.
 * Inside military bases, soldier models will spawn instead of normal cops (a feature from PedTweaks by Cyclone92)
   * Around Area 69, the military will first send out only military trucks, and eventually tanks
   * This is also the only scenario where you may encounter the military giving chase
@@ -63,12 +62,12 @@ The cops in this game, however, are speed cheaters so escaping 5-6 stars this wa
 ## History
 ### Update 7.1
 * Removed the respray disabling feature (as it caused bugs). [Time+Cops PayNSpray](https://libertycity.net/files/gta-san-andreas/203319-timecops-paynspray.html) is recommended for this instead.
-* Now the script will only check if you're too near a cop after respraying your car
+* Now the script will only check if you're too near a cop after respraying your car.
+* Airport tickets and mod garages are no longer disabled if being wanted. It is recommended to use a modified main.scm if one wishes to have this feature.
 
 ### Update 7.0 (Testing)
 * Cops now take some time to arrive at player's location at first.
 * The amount of time is dependent on the zone the player is in, and can be configured.
-* With a wanted level, players now can't buy tickets at airports.
 
 ### Update 6.3
 * Added an .ini configuration file.
