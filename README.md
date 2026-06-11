@@ -60,6 +60,10 @@ The cops in this game, however, are speed cheaters so escaping 5-6 stars this wa
 * [Time+Cops PayNSpray](https://libertycity.net/files/gta-san-andreas/203319-timecops-paynspray.html) from Artem.1.9.9.6.
 
 ## History
+### Update 7.1.1
+* Fixed the bug involving the attack helicopter script, which made the mission created NPCs to spawn in wrong places.
+* Fixed the another bug where the cop spawn time might get reset when the player is constantly recentered.
+
 ### Update 7.1
 * Removed the respray disabling feature (as it caused bugs). [Time+Cops PayNSpray](https://libertycity.net/files/gta-san-andreas/203319-timecops-paynspray.html) is recommended for this instead.
 * Now the script will only check if you're too near a cop after respraying your car.
