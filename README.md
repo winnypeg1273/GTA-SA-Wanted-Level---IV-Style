@@ -14,7 +14,7 @@ This mod alters police response in GTA SA to be more like GTA IV:
   * You will always be seen if you are flying, or inside a restricted area or city
   * The guys on the helicopters can see you from further away
   * Your wanted level won't automatically drop in urban areas
-  * After you leave the search area, the cooldown period begins. You must avoid more attention before you escape completely
+  * After you leave the search area, the cooldown period begins. You must avoid more attention before you escape completely.
 
 * Your status is indicated by the star color:
   * Bright yellow: you are in sight of the cops
